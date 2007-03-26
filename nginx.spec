@@ -4,10 +4,11 @@
 %define nginx_home_tmp  %{nginx_home}/tmp
 %define nginx_logdir    %{_localstatedir}/log/nginx
 %define nginx_confdir   %{_sysconfdir}/nginx
+%define nginx_datadir   %{_datadir}/nginx
 
 Name:           nginx
-Version:        0.5.15
-Release:        3%{?dist}
+Version:        0.5.16
+Release:        1%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -68,7 +69,7 @@ export DESTDIR=%{buildroot}
 ./configure \
     --user=%{nginx_user} \
     --group=%{nginx_group} \
-    --prefix=%{_datadir}/%{name} \
+    --prefix=%{nginx_datadir} \
     --sbin-path=%{_sbindir}/%{name} \
     --conf-path=%{nginx_confdir}/%{name}.conf \
     --error-log-path=%{nginx_logdir}/error.log \
@@ -127,7 +128,8 @@ fi
 %files
 %defattr(-,root,root,-)
 %doc LICENSE CHANGES README
-%dir %{_datadir}/%{name}
+%dir %{nginx_datadir}
+%dir %{nginx_datadir}/html
 %{_datadir}/%{name}/*/*
 %{_sbindir}/%{name}
 %{_mandir}/man3/%{name}.3pm.gz
@@ -150,6 +152,10 @@ fi
 
 
 %changelog
+* Mon Mar 26 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.16-1
+- Update to 0.5.16
+- add ownership of /usr/share/nginx/html (#233950)
+
 * Fri Mar 23 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.15-3
 - fixed package review bugs (#235222) given by ruben@rubenkerkhof.com
 
