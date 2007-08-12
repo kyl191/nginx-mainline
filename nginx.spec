@@ -8,7 +8,7 @@
 
 Name:           nginx
 Version:        0.5.30
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -23,7 +23,7 @@ License:        BSD-like
 URL:            http://nginx.net/ 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires:      pcre-devel,zlib-devel,openssl-devel
+BuildRequires:      pcre-devel,zlib-devel,openssl-devel,perl-devel
 Requires:           pcre,zlib,openssl
 Requires(pre):      %{_sbindir}/useradd
 Requires(post):     /sbin/chkconfig
@@ -152,6 +152,9 @@ fi
 
 
 %changelog
+* Sat Aug 11 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.30-2
+- Add BuildRequires: perl-devel - fixing rawhide build
+
 * Mon Jul 30 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.30-1
 - Update to 0.5.30
 
