@@ -8,7 +8,7 @@
 
 Name:           nginx
 Version:        0.5.31
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -61,6 +61,10 @@ proxy server written by Igor Sysoev.
 # variable.  The configure script(s) have been patched (Patch1 and
 # Patch2) in order to support installing into a build environment.
 export DESTDIR=%{buildroot}
+
+# pcre is in /usr/include/pcre in RHEL4 instead of /usr/include
+export PCRE_FLAGS=$(/usr/bin/pcre-config --cflags)
+
 ./configure \
     --user=%{nginx_user} \
     --group=%{nginx_group} \
@@ -82,7 +86,7 @@ export DESTDIR=%{buildroot}
     --with-http_perl_module \
     --with-mail \
     --with-mail_ssl_module \
-    --with-cc-opt="%{optflags}"
+    --with-cc-opt="%{optflags} ${PCRE_FLAGS}"
 make %{?_smp_mflags} 
 
 
@@ -147,6 +151,9 @@ fi
 
 
 %changelog
+* Sat Aug 18 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.31-3
+- add in pcre-config --cflags
+
 * Sat Aug 18 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.31-2
 - remove BuildRequires: perl-devel
 
