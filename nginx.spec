@@ -7,23 +7,18 @@
 %define nginx_datadir   %{_datadir}/nginx
 
 Name:           nginx
-Version:        0.5.30
+Version:        0.5.31
 Release:        1%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
-# The license appears to be equivalent to the New BSD License
-# (http://www.opensource.org/licenses/bsd-license.php) without the 3rd
-# clause.  Which according to OSI makes it functionally equivalent to
-# the MIT license.  The documentation on the nginx wiki
-# (http://wiki.codemongers.com/Nginx) says :
-#
-#   "The sources are licensed under a BSD-like license"
-License:        BSD-like
+# BSD 2 clause license
+# http://www.freebsd.org/copyright/freebsd-license.html
+License:        BSD
 URL:            http://nginx.net/ 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires:      pcre-devel,zlib-devel,openssl-devel
+BuildRequires:      pcre-devel,zlib-devel,openssl-devel,perl-devel
 Requires:           pcre,zlib,openssl
 Requires(pre):      %{_sbindir}/useradd
 Requires(post):     /sbin/chkconfig
@@ -152,6 +147,13 @@ fi
 
 
 %changelog
+* Fri Aug 17 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.31-1
+- Update to 0.5.31
+- specify license is BSD
+
+* Sat Aug 11 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.30-2
+- Add BuildRequires: perl-devel - fixing rawhide build
+
 * Mon Jul 30 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.30-1
 - Update to 0.5.30
 
