@@ -8,11 +8,11 @@
 
 Name:           nginx
 Version:        0.5.31
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
-# BSD 2 clause license
+# BSD License (two clause)
 # http://www.freebsd.org/copyright/freebsd-license.html
 License:        BSD
 URL:            http://nginx.net/ 
@@ -61,10 +61,6 @@ proxy server written by Igor Sysoev.
 # variable.  The configure script(s) have been patched (Patch1 and
 # Patch2) in order to support installing into a build environment.
 export DESTDIR=%{buildroot}
-
-# pcre is in /usr/include/pcre in RHEL4 instead of /usr/include
-export PCRE_FLAGS=$(/usr/bin/pcre-config --cflags)
-
 ./configure \
     --user=%{nginx_user} \
     --group=%{nginx_group} \
@@ -81,12 +77,14 @@ export PCRE_FLAGS=$(/usr/bin/pcre-config --cflags)
     --with-http_ssl_module \
     --with-http_realip_module \
     --with-http_addition_module \
+    --with-http_sub_module \
     --with-http_dav_module \
     --with-http_flv_module \
+    --with-http_stub_status_module \
     --with-http_perl_module \
     --with-mail \
     --with-mail_ssl_module \
-    --with-cc-opt="%{optflags} ${PCRE_FLAGS}"
+    --with-cc-opt="%{optflags} $(pcre-config --cflags)"
 make %{?_smp_mflags} 
 
 
@@ -151,6 +149,10 @@ fi
 
 
 %changelog
+* Sat Aug 18 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.31-4
+- added --with-http_stub_status_module build option.
+- added --with-http_sub_module build option.
+
 * Sat Aug 18 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.31-3
 - add in pcre-config --cflags
 
