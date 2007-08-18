@@ -8,7 +8,7 @@
 
 Name:           nginx
 Version:        0.5.31
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -18,7 +18,7 @@ License:        BSD
 URL:            http://nginx.net/ 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires:      pcre-devel,zlib-devel,openssl-devel,perl-devel
+BuildRequires:      pcre-devel,zlib-devel,openssl-devel
 Requires:           pcre,zlib,openssl
 Requires(pre):      %{_sbindir}/useradd
 Requires(post):     /sbin/chkconfig
@@ -147,6 +147,9 @@ fi
 
 
 %changelog
+* Sat Aug 18 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.31-2
+- remove BuildRequires: perl-devel
+
 * Fri Aug 17 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.31-1
 - Update to 0.5.31
 - specify license is BSD
