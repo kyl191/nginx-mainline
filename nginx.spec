@@ -7,8 +7,8 @@
 %define nginx_datadir   %{_datadir}/nginx
 
 Name:           nginx
-Version:        0.5.31
-Release:        2%{?dist}
+Version:        0.5.32
+Release:        1%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -102,6 +102,14 @@ chmod 0755 %{buildroot}%{_sbindir}/nginx
 %{__install} -p -d -m 0755 %{buildroot}%{nginx_home_tmp}
 %{__install} -p -d -m 0755 %{buildroot}%{nginx_logdir}
 
+# convert to UTF-8 all files that give warnings.
+for textfile in CHANGES
+do
+    mv $textfile $textfile.old
+    iconv --from-code ISO8859-1 --to-code UTF-8 --output $textfile $textfile.old
+    rm -f $textfile.old
+done
+
 %clean
 rm -rf %{buildroot}
 
@@ -149,6 +157,10 @@ fi
 
 
 %changelog
+* Mon Sep 24 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.32-1
+- updated to 0.5.32
+- fixed rpmlint UTF-8 complaints.
+
 * Sat Aug 18 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.31-2
 - added --with-http_stub_status_module build option.
 - added --with-http_sub_module build option.
