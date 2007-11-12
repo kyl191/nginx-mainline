@@ -7,23 +7,18 @@
 %define nginx_datadir   %{_datadir}/nginx
 
 Name:           nginx
-Version:        0.5.27
+Version:        0.5.33
 Release:        1%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
-# The license appears to be equivalent to the New BSD License
-# (http://www.opensource.org/licenses/bsd-license.php) without the 3rd
-# clause.  Which according to OSI makes it functionally equivalent to
-# the MIT license.  The documentation on the nginx wiki
-# (http://wiki.codemongers.com/Nginx) says :
-#
-#   "The sources are licensed under a BSD-like license"
-License:        BSD-like
+# BSD License (two clause)
+# http://www.freebsd.org/copyright/freebsd-license.html
+License:        BSD
 URL:            http://nginx.net/ 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires:      pcre-devel,zlib-devel,openssl-devel
+BuildRequires:      pcre-devel,zlib-devel,openssl-devel,perl-devel
 Requires:           pcre,zlib,openssl
 Requires(pre):      %{_sbindir}/useradd
 Requires(post):     /sbin/chkconfig
@@ -82,12 +77,14 @@ export DESTDIR=%{buildroot}
     --with-http_ssl_module \
     --with-http_realip_module \
     --with-http_addition_module \
+    --with-http_sub_module \
     --with-http_dav_module \
     --with-http_flv_module \
+    --with-http_stub_status_module \
     --with-http_perl_module \
     --with-mail \
     --with-mail_ssl_module \
-    --with-cc-opt="%{optflags}"
+    --with-cc-opt="%{optflags} $(pcre-config --cflags)"
 make %{?_smp_mflags} 
 
 
@@ -104,6 +101,14 @@ chmod 0755 %{buildroot}%{_sbindir}/nginx
 %{__install} -p -D -m 0644 %{SOURCE2} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
 %{__install} -p -d -m 0755 %{buildroot}%{nginx_home_tmp}
 %{__install} -p -d -m 0755 %{buildroot}%{nginx_logdir}
+
+# convert to UTF-8 all files that give warnings.
+for textfile in CHANGES
+do
+    mv $textfile $textfile.old
+    iconv --from-code ISO8859-1 --to-code UTF-8 --output $textfile $textfile.old
+    rm -f $textfile.old
+done
 
 %clean
 rm -rf %{buildroot}
@@ -152,6 +157,34 @@ fi
 
 
 %changelog
+* Sun Nov 11 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.33-1
+- update to 0.5.33
+
+* Mon Sep 24 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.32-1
+- updated to 0.5.32
+- fixed rpmlint UTF-8 complaints.
+
+* Sat Aug 18 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.31-2
+- added --with-http_stub_status_module build option.
+- added --with-http_sub_module build option.
+- added use of pcre-config --cflags
+
+* Fri Aug 17 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.31-1
+- Update to 0.5.31
+- specify license is BSD
+
+* Sat Aug 11 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.30-2
+- Add BuildRequires: perl-devel - fixing rawhide build
+
+* Mon Jul 30 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.30-1
+- Update to 0.5.30
+
+* Tue Jul 24 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.29-1
+- Update to 0.5.29
+
+* Wed Jul 18 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.28-1
+- Update to 0.5.28
+
 * Mon Jul 09 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.27-1
 - Update to 0.5.27
 
