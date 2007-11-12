@@ -8,7 +8,7 @@
 
 Name:           nginx
 Version:        0.5.33
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -157,6 +157,9 @@ fi
 
 
 %changelog
+* Mon Nov 12 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.33-2
+- bump build number - source wasn't update
+
 * Mon Nov 12 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.33-1
 * update to 0.5.33
 
