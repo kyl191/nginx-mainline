@@ -18,7 +18,7 @@ License:        BSD
 URL:            http://nginx.net/ 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires:      pcre-devel,zlib-devel,openssl-devel,perl-devel
+BuildRequires:      pcre-devel,zlib-devel,openssl-devel
 Requires:           pcre,zlib,openssl
 Requires(pre):      %{_sbindir}/useradd
 Requires(post):     /sbin/chkconfig
@@ -157,33 +157,13 @@ fi
 
 
 %changelog
-* Sun Nov 11 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.33-1
+* Mon Nov 12 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.33-1
 - update to 0.5.33
-
-* Mon Sep 24 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.32-1
-- updated to 0.5.32
 - fixed rpmlint UTF-8 complaints.
-
-* Sat Aug 18 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.31-2
-- added --with-http_stub_status_module build option.
+- added --with-http_stub_status_module build option
 - added --with-http_sub_module build option.
 - added use of pcre-config --cflags
-
-* Fri Aug 17 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.31-1
-- Update to 0.5.31
 - specify license is BSD
-
-* Sat Aug 11 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.30-2
-- Add BuildRequires: perl-devel - fixing rawhide build
-
-* Mon Jul 30 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.30-1
-- Update to 0.5.30
-
-* Tue Jul 24 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.29-1
-- Update to 0.5.29
-
-* Wed Jul 18 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.28-1
-- Update to 0.5.28
 
 * Mon Jul 09 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.27-1
 - Update to 0.5.27
