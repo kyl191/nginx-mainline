@@ -7,8 +7,8 @@
 %define nginx_datadir   %{_datadir}/nginx
 
 Name:           nginx
-Version:        0.5.33
-Release:        2%{?dist}
+Version:        0.5.34
+Release:        1%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -157,6 +157,9 @@ fi
 
 
 %changelog
+* Sun Dec 16 2007 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.5.34-1
+- update to 0.5.34
+
 * Mon Nov 12 2007 Jeremy Hinegardner <jeremy@hinegardner.org> - 0.5.33-2
 - bump build number - source wasn't update
 
