@@ -8,7 +8,7 @@
 
 Name:           nginx
 Version:        0.5.35
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -157,6 +157,9 @@ fi
 
 
 %changelog
+* Tue Feb 19 2008 Fedora Release Engineering <rel-eng@fedoraproject.org> - 0.5.35-2
+- Autorebuild for GCC 4.3
+
 * Sat Jan 19 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.5.35-1
 - update to 0.5.35
 
