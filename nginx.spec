@@ -8,7 +8,7 @@
 
 Name:           nginx
 Version:        0.5.35
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -18,12 +18,15 @@ License:        BSD
 URL:            http://nginx.net/ 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires:      pcre-devel,zlib-devel,openssl-devel,perl-devel
+BuildRequires:      pcre-devel,zlib-devel,openssl-devel,perl-devel,perl(ExtUtils::Embed)
 Requires:           pcre,zlib,openssl
-Requires(pre):      %{_sbindir}/useradd
-Requires(post):     /sbin/chkconfig
-Requires(preun):    /sbin/chkconfig, /sbin/service
-Requires(postun):   /sbin/service
+Requires:           perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
+# for /usr/sbin/useradd
+Requires(pre):      shadow-utils
+Requires(post):     chkconfig
+# for /sbin/service
+Requires(preun):    chkconfig, initscripts
+Requires(postun):   initscripts
 
 Source0:    http://sysoev.ru/nginx/nginx-%{version}.tar.gz
 Source1:    %{name}.init
@@ -157,6 +160,10 @@ fi
 
 
 %changelog
+* Tue Mar 18 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 0.5.35-3
+- add Requires for versioned perl (libperl.so)
+- drop silly file Requires
+
 * Tue Feb 19 2008 Fedora Release Engineering <rel-eng@fedoraproject.org> - 0.5.35-2
 - Autorebuild for GCC 4.3
 
