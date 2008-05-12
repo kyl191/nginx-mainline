@@ -9,7 +9,7 @@
 
 Name:           nginx
 Version:        0.6.30
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -190,7 +190,7 @@ fi
 
 
 %changelog
-* Sun May 11 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.30-1
+* Sun May 11 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.30-2
 - upate to new upstream stable branch 0.6
 - added 3rd party module nginx-upstream-fair
 - added default webpages
