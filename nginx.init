@@ -7,6 +7,7 @@
 #               proxy and IMAP/POP3 proxy server
 # processname: nginx
 # config:      /etc/nginx/nginx.conf
+# config:      /etc/sysconfig/nginx
 # pidfile:     /var/run/nginx.pid
 
 # Source function library.
@@ -21,13 +22,17 @@
 nginx="/usr/sbin/nginx"
 prog=$(basename $nginx)
 
+NGINX_CONF_FILE="/etc/nginx/nginx.conf"
+
 [ -e /etc/sysconfig/nginx ] && . /etc/sysconfig/nginx
 
 lockfile=/var/lock/subsys/nginx
 
 start() {
+    [ -x $nginx ] || exit 5
+    [ -f $config ] || exit 6
     echo -n $"Starting $prog: "
-    daemon $nginx -c /etc/$prog/$prog.conf
+    daemon $nginx -c $config
     retval=$?
     echo
     [ $retval -eq 0 ] && touch $lockfile
@@ -59,24 +64,40 @@ force_reload() {
     restart
 }
 
-fdr_status() {
+rh_status() {
     status $prog
 }
 
+rh_status_q() {
+    rh_status >/dev/null 2>&1
+}
+
 case "$1" in
-    start|stop|restart|reload)
+    start)
+        rh_status_q && exit 0
+        $1
+        ;;
+    stop)
+        rh_status_q || exit 0
+        $1
+        ;;
+    restart)
+        $1
+        ;;
+    reload)
+        rh_status_q || exit 7
         $1
         ;;
     force-reload)
         force_reload
         ;;
     status)
-        fdr_status
+        rh_status
         ;;
     condrestart|try-restart)
-  	[ ! -f $lockfile ] || restart
-	;;
+        rh_status_q || exit 0
+	    ;;
     *)
-        echo $"Usage: $0 {start|stop|status|restart|try-restart|reload|force-reload}"
+        echo $"Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload}"
         exit 2
 esac

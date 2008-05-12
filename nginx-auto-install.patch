@@ -1,6 +1,6 @@
---- auto/install.orig	2007-03-22 09:30:15.000000000 -0600
-+++ auto/install	2007-03-22 09:40:42.000000000 -0600
-@@ -19,42 +19,42 @@
+--- auto/install.orig	2008-05-11 15:02:01.000000000 -0600
++++ auto/install	2008-05-11 15:03:54.000000000 -0600
+@@ -19,45 +19,45 @@
  
  install:	$NGX_OBJS${ngx_dirsep}nginx${ngx_binext}	\
  		$NGX_INSTALL_PERL_MODULES
@@ -16,29 +16,34 @@
 +	test ! -f '$NGX_DEST_DIR$NGX_SBIN_PATH' || mv '$NGX_DEST_DIR$NGX_SBIN_PATH' '$NGX_DEST_DIR$NGX_SBIN_PATH.old'
 +	cp $NGX_OBJS/nginx '$NGX_DEST_DIR$NGX_SBIN_PATH'
  
--	test -d '`dirname "$NGX_CONF_PATH"`' \
--		|| mkdir -p '`dirname "$NGX_CONF_PATH"`'
-+	test -d '`dirname "$NGX_DEST_DIR$NGX_CONF_PATH"`' \
-+		|| mkdir -p '`dirname "$NGX_DEST_DIR$NGX_CONF_PATH"`'
+-	test -d '$NGX_CONF_PREFIX' || mkdir -p '$NGX_CONF_PREFIX'
++	test -d '$NGX_DEST_DIR$NGX_CONF_PREFIX' || mkdir -p '$NGX_DEST_DIR$NGX_CONF_PREFIX'
  
--	cp conf/koi-win '`dirname "$NGX_CONF_PATH"`'
--	cp conf/koi-utf '`dirname "$NGX_CONF_PATH"`'
--	cp conf/win-utf '`dirname "$NGX_CONF_PATH"`'
-+	cp conf/koi-win '`dirname "$NGX_DEST_DIR$NGX_CONF_PATH"`'
-+	cp conf/koi-utf '`dirname "$NGX_DEST_DIR$NGX_CONF_PATH"`'
-+	cp conf/win-utf '`dirname "$NGX_DEST_DIR$NGX_CONF_PATH"`'
+-	cp conf/koi-win '$NGX_CONF_PREFIX'
+-	cp conf/koi-utf '$NGX_CONF_PREFIX'
+-	cp conf/win-utf '$NGX_CONF_PREFIX'
++	cp conf/koi-win '$NGX_DEST_DIR$NGX_CONF_PREFIX'
++	cp conf/koi-utf '$NGX_DEST_DIR$NGX_CONF_PREFIX'
++	cp conf/win-utf '$NGX_DEST_DIR$NGX_CONF_PREFIX'
  
--	test -f '`dirname "$NGX_CONF_PATH"`/mime.types' || \
--		cp conf/mime.types '`dirname "$NGX_CONF_PATH"`/mime.types'
--	cp conf/mime.types '`dirname "$NGX_CONF_PATH"`/mime.types.default'
-+	test -f '`dirname "$NGX_DEST_DIR$NGX_CONF_PATH"`/mime.types' || \
-+		cp conf/mime.types '`dirname "$NGX_DEST_DIR$NGX_CONF_PATH"`/mime.types'
-+	cp conf/mime.types '`dirname "$NGX_DEST_DIR$NGX_CONF_PATH"`/mime.types.default'
+-	test -f '$NGX_CONF_PREFIX/mime.types' \
+-		|| cp conf/mime.types '$NGX_CONF_PREFIX'
+-	cp conf/mime.types '$NGX_CONF_PREFIX/mime.types.default'
++	test -f '$NGX_DEST_DIR$NGX_CONF_PREFIX/mime.types' \
++		|| cp conf/mime.types '$NGX_DEST_DIR$NGX_CONF_PREFIX'
++	cp conf/mime.types '$NGX_DEST_DIR$NGX_CONF_PREFIX/mime.types.default'
  
--	test -f '$NGX_CONF_PATH' || cp conf/nginx.conf '$NGX_CONF_PATH'
--	cp conf/nginx.conf '`dirname "$NGX_CONF_PATH"`/nginx.conf.default'
-+	test -f '$NGX_DEST_DIR$NGX_CONF_PATH' || cp conf/nginx.conf '$NGX_DEST_DIR$NGX_CONF_PATH'
-+	cp conf/nginx.conf '`dirname "$NGX_DEST_DIR$NGX_CONF_PATH"`/nginx.conf.default'
+-	test -f '$NGX_CONF_PREFIX/fastcgi_params' \
+-		|| cp conf/fastcgi_params '$NGX_CONF_PREFIX'
+-	cp conf/fastcgi_params '$NGX_CONF_PREFIX/fastcgi_params.default'
++	test -f '$NGX_DEST_DIR$NGX_CONF_PREFIX/fastcgi_params' \
++		|| cp conf/fastcgi_params '$NGX_DEST_DIR$NGX_CONF_PREFIX'
++	cp conf/fastcgi_params '$NGX_DEST_DIR$NGX_CONF_PREFIX/fastcgi_params.default'
+ 
+-	test -f '$NGX_CONF_PATH' || cp conf/nginx.conf '$NGX_CONF_PREFIX'
+-	cp conf/nginx.conf '$NGX_CONF_PREFIX/nginx.conf.default'
++	test -f '$NGX_DEST_DIR$NGX_CONF_PATH' || cp conf/nginx.conf '$NGX_DEST_DIR$NGX_CONF_PREFIX'
++	cp conf/nginx.conf '$NGX_DEST_DIR$NGX_CONF_PREFIX/nginx.conf.default'
  
 -	test -d '`dirname "$NGX_PID_PATH"`' \
 -		|| mkdir -p '`dirname "$NGX_PID_PATH"`'
@@ -56,13 +61,13 @@
  
  
 -if test -n "$NGX_ERROR_LOG_PATH"; then
-+if test -n "$NGX_DEST_DIR/$NGX_ERROR_LOG_PATH"; then
++if test -n "$NGX_DEST_DIR$NGX_ERROR_LOG_PATH"; then
      cat << END                                                >> $NGX_MAKEFILE
  
 -	test -d '`dirname "$NGX_ERROR_LOG_PATH"`' || \
 -		mkdir -p '`dirname "$NGX_ERROR_LOG_PATH"`'
-+	test -d '`dirname "$NGX_DEST_DIR/$NGX_ERROR_LOG_PATH"`' || \
-+		mkdir -p '`dirname "$NGX_DEST_DIR/$NGX_ERROR_LOG_PATH"`'
++	test -d '`dirname "$NGX_DEST_DIR$NGX_ERROR_LOG_PATH"`' || \
++		mkdir -p '`dirname "$NGX_DEST_DIR$NGX_ERROR_LOG_PATH"`'
  END
  
  fi
