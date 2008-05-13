@@ -5,9 +5,10 @@
 %define nginx_logdir    %{_localstatedir}/log/nginx
 %define nginx_confdir   %{_sysconfdir}/nginx
 %define nginx_datadir   %{_datadir}/nginx
+%define nginx_webroot   %{nginx_datadir}/html
 
 Name:           nginx
-Version:        0.5.35
+Version:        0.6.31
 Release:        1%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
@@ -18,16 +19,29 @@ License:        BSD
 URL:            http://nginx.net/ 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires:      pcre-devel,zlib-devel,openssl-devel
+BuildRequires:      pcre-devel,zlib-devel,openssl-devel,perl(ExtUtils::Embed)
 Requires:           pcre,zlib,openssl
-Requires(pre):      %{_sbindir}/useradd
-Requires(post):     /sbin/chkconfig
-Requires(preun):    /sbin/chkconfig, /sbin/service
-Requires(postun):   /sbin/service
+Requires:           perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
+# for /user/sbin/useradd
+Requires(pre):      shadow-utils
+Requires(post):     chkconfig
+# for /sbin/service
+Requires(preun):    chkconfig, initscripts
+Requires(postun):   initscripts
 
 Source0:    http://sysoev.ru/nginx/nginx-%{version}.tar.gz
 Source1:    %{name}.init
 Source2:    %{name}.logrotate
+Source3:    virtual.conf
+Source4:    ssl.conf
+Source5:    nginx-upstream-fair.tgz
+Source6:    upstream-fair.conf
+Source7:    %{name}.sysconfig
+Source100:  index.html
+Source101:  poweredby.png
+Source102:  nginx-logo.png
+Source103:  50x.html
+Source104:  404.html
 
 # removes -Werror in upstream build scripts.  -Werror conflicts with
 # -D_FORTIFY_SOURCE=2 causing warnings to turn into errors.
@@ -35,8 +49,8 @@ Patch0:     nginx-auto-cc-gcc.patch
 
 # nginx has its own configure/build scripts.  These patches allow nginx
 # to install into a buildroot.
-Patch1:     nginx-auto-install.patch
-Patch2:     nginx-auto-options.patch
+Patch2:     nginx-auto-install.patch
+Patch1:     nginx-auto-options.patch
 
 # configuration patch to match all the Fedora paths for logs, pid files
 # etc.
@@ -46,6 +60,8 @@ Patch3:     nginx-conf.patch
 Nginx [engine x] is an HTTP(S) server, HTTP(S) reverse proxy and IMAP/POP3
 proxy server written by Igor Sysoev.
 
+One third party module, nginx-upstream-fair has been added.
+
 %prep
 %setup -q
 
@@ -53,6 +69,7 @@ proxy server written by Igor Sysoev.
 %patch1 -p0
 %patch2 -p0
 %patch3 -p0
+%{__tar} zxvf %{SOURCE5}
 
 %build
 # nginx does not utilize a standard configure script.  It has its own
@@ -80,13 +97,19 @@ export DESTDIR=%{buildroot}
     --with-http_sub_module \
     --with-http_dav_module \
     --with-http_flv_module \
+    --with-http_gzip_static_module \
     --with-http_stub_status_module \
     --with-http_perl_module \
     --with-mail \
     --with-mail_ssl_module \
-    --with-cc-opt="%{optflags} $(pcre-config --cflags)"
+    --with-cc-opt="%{optflags} $(pcre-config --cflags)" \
+    --add-module=%{_builddir}/nginx-%{version}/nginx-upstream-fair
+
 make %{?_smp_mflags} 
 
+# rename the readme for nginx-upstream-fair so it doesn't conflict with the main
+# readme
+mv nginx-upstream-fair/README nginx-upstream-fair/README.nginx-upstream-fair
 
 %install
 rm -rf %{buildroot}
@@ -99,8 +122,13 @@ find %{buildroot} -type f -name '*.so' -exec chmod 0755 {} \;
 chmod 0755 %{buildroot}%{_sbindir}/nginx
 %{__install} -p -D -m 0755 %{SOURCE1} %{buildroot}%{_initrddir}/%{name}
 %{__install} -p -D -m 0644 %{SOURCE2} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
+%{__install} -p -D -m 0644 %{SOURCE7} %{buildroot}%{_sysconfdir}/sysconfig/%{name}
+%{__install} -p -d -m 0755 %{buildroot}%{nginx_confdir}/conf.d
+%{__install} -p -m 0644 %{SOURCE3} %{SOURCE4} %{SOURCE6} %{buildroot}%{nginx_confdir}/conf.d
 %{__install} -p -d -m 0755 %{buildroot}%{nginx_home_tmp}
 %{__install} -p -d -m 0755 %{buildroot}%{nginx_logdir}
+%{__install} -p -d -m 0755 %{buildroot}%{nginx_webroot}
+%{__install} -p -m 0644 %{SOURCE100} %{SOURCE101} %{SOURCE102} %{SOURCE103} %{SOURCE104} %{buildroot}%{nginx_webroot}
 
 # convert to UTF-8 all files that give warnings.
 for textfile in CHANGES
@@ -132,22 +160,26 @@ fi
 
 %files
 %defattr(-,root,root,-)
-%doc LICENSE CHANGES README
+%doc LICENSE CHANGES README nginx-upstream-fair/README.nginx-upstream-fair
 %dir %{nginx_datadir}
-%dir %{nginx_datadir}/html
 %{_datadir}/%{name}/*/*
 %{_sbindir}/%{name}
 %{_mandir}/man3/%{name}.3pm.gz
 %{_initrddir}/%{name}
 %dir %{nginx_confdir}
+%dir %{nginx_confdir}/conf.d
+%config(noreplace) %{nginx_confdir}/conf.d/*.conf
 %config(noreplace) %{nginx_confdir}/win-utf
 %config(noreplace) %{nginx_confdir}/%{name}.conf.default
 %config(noreplace) %{nginx_confdir}/mime.types.default
+%config(noreplace) %{nginx_confdir}/fastcgi_params
+%config(noreplace) %{nginx_confdir}/fastcgi_params.default
 %config(noreplace) %{nginx_confdir}/koi-win
 %config(noreplace) %{nginx_confdir}/koi-utf
 %config(noreplace) %{nginx_confdir}/%{name}.conf
 %config(noreplace) %{nginx_confdir}/mime.types
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
+%config(noreplace) %{_sysconfdir}/sysconfig/%{name}
 %dir %{perl_vendorarch}/auto/%{name}
 %{perl_vendorarch}/%{name}.pm
 %{perl_vendorarch}/auto/%{name}/%{name}.so
@@ -157,6 +189,15 @@ fi
 
 
 %changelog
+* Mon May 12 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.31-1
+- update to new upstream stable branch 0.6
+- added 3rd party module nginx-upstream-fair
+- add /etc/nginx/conf.d support [#443280]
+- use /etc/sysconfig/nginx to determine nginx.conf [#442708]
+- added default webpages
+- add Requires for versioned perl (libperl.so) (via Tom "spot" Callaway)
+- drop silly file Requires (via Tom "spot" Callaway)
+
 * Sat Jan 19 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.5.35-1
 - update to 0.5.35
 
