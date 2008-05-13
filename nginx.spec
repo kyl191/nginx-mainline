@@ -8,8 +8,8 @@
 %define nginx_webroot   %{nginx_datadir}/html
 
 Name:           nginx
-Version:        0.6.30
-Release:        2%{?dist}
+Version:        0.6.31
+Release:        1%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -190,6 +190,9 @@ fi
 
 
 %changelog
+* Mon May 12 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.31-2
+- update to 0.6.31
+
 * Sun May 11 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.30-2
 - upate to new upstream stable branch 0.6
 - added 3rd party module nginx-upstream-fair
