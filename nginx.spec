@@ -9,7 +9,7 @@
 
 Name:           nginx
 Version:        0.6.31
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -189,6 +189,10 @@ fi
 
 
 %changelog
+* Mon May 26 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.31-3
+- update init script
+- remove 'default' listen parameter
+
 * Tue May 13 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.31-2
 - added missing Source files
 
