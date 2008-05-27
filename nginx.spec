@@ -9,7 +9,7 @@
 
 Name:           nginx
 Version:        0.6.31
-Release:        3%{?dist}
+Release:        2%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -190,14 +190,14 @@ fi
 
 
 %changelog
-* Mon May 26 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.31-3
+* Mon May 26 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.31-2
 - init script fixes
 - resolve 'listen 80 default' [#447873]
 
-* Mon May 12 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.31-2
+* Mon May 12 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.31-1
 - update to 0.6.31
 
-* Sun May 11 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.30-2
+* Sun May 11 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.30-1
 - upate to new upstream stable branch 0.6
 - added 3rd party module nginx-upstream-fair
 - added default webpages
