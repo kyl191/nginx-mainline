@@ -24,13 +24,13 @@ prog=$(basename $nginx)
 
 NGINX_CONF_FILE="/etc/nginx/nginx.conf"
 
-[ -e /etc/sysconfig/nginx ] && . /etc/sysconfig/nginx
+[ -f /etc/sysconfig/nginx ] && . /etc/sysconfig/nginx
 
 lockfile=/var/lock/subsys/nginx
 
 start() {
     [ -x $nginx ] || exit 5
-    [ -f $config ] || exit 6
+    [ -f $NGINX_CONF_FILE ] || exit 6
     echo -n $"Starting $prog: "
     daemon $nginx -c $NGINX_CONF_FILE
     retval=$?
@@ -49,11 +49,13 @@ stop() {
 }
 
 restart() {
+    configtest || return $?
     stop
     start
 }
 
 reload() {
+    configtest || return $?
     echo -n $"Reloading $prog: "
     killproc $nginx -HUP
     RETVAL=$?
@@ -62,6 +64,10 @@ reload() {
 
 force_reload() {
     restart
+}
+
+configtest() {
+  $nginx -t -c $NGINX_CONF_FILE
 }
 
 rh_status() {
@@ -81,7 +87,7 @@ case "$1" in
         rh_status_q || exit 0
         $1
         ;;
-    restart)
+    restart|configtest)
         $1
         ;;
     reload)
@@ -98,6 +104,6 @@ case "$1" in
         rh_status_q || exit 0
 	    ;;
     *)
-        echo $"Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload}"
+        echo $"Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload|configtest}"
         exit 2
 esac
