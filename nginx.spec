@@ -8,8 +8,8 @@
 %define nginx_webroot   %{nginx_datadir}/html
 
 Name:           nginx
-Version:        0.6.31
-Release:        2%{?dist}
+Version:        0.6.32
+Release:        1%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -47,14 +47,9 @@ Source104:  404.html
 # -D_FORTIFY_SOURCE=2 causing warnings to turn into errors.
 Patch0:     nginx-auto-cc-gcc.patch
 
-# nginx has its own configure/build scripts.  These patches allow nginx
-# to install into a buildroot.
-Patch1:     nginx-auto-options.patch
-Patch2:     nginx-auto-install.patch
-
 # configuration patch to match all the Fedora paths for logs, pid files
 # etc.
-Patch3:     nginx-conf.patch
+Patch1:     nginx-conf.patch
 
 %description
 Nginx [engine x] is an HTTP(S) server, HTTP(S) reverse proxy and IMAP/POP3
@@ -68,8 +63,6 @@ One third party module, nginx-upstream-fair, is added
 
 %patch0 -p0
 %patch1 -p0
-%patch2 -p0
-%patch3 -p0
 %{__tar} zxvf %{SOURCE5}
 
 %build
@@ -190,14 +183,18 @@ fi
 
 
 %changelog
-* Mon May 26 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.31-2
+* Tue Jul 22 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.32-1
+- update to 0.6.32
+- nginx now supports DESTDIR so removed the patches that enabled it 
+
+* Mon May 26 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.31-3
 - init script fixes
 - resolve 'listen 80 default' [#447873]
 
-* Mon May 12 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.31-1
+* Mon May 12 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.31-2
 - update to 0.6.31
 
-* Sun May 11 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.30-1
+* Sun May 11 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.30-2
 - upate to new upstream stable branch 0.6
 - added 3rd party module nginx-upstream-fair
 - added default webpages
