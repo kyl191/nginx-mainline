@@ -8,8 +8,8 @@
 %define nginx_webroot   %{nginx_datadir}/html
 
 Name:           nginx
-Version:        0.6.31
-Release:        3%{?dist}
+Version:        0.6.32
+Release:        1%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -22,7 +22,7 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:      pcre-devel,zlib-devel,openssl-devel,perl(ExtUtils::Embed)
 Requires:           pcre,zlib,openssl
 Requires:           perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
-# for /user/sbin/useradd
+# for /usr/sbin/useradd
 Requires(pre):      shadow-utils
 Requires(post):     chkconfig
 # for /sbin/service
@@ -47,28 +47,21 @@ Source104:  404.html
 # -D_FORTIFY_SOURCE=2 causing warnings to turn into errors.
 Patch0:     nginx-auto-cc-gcc.patch
 
-# nginx has its own configure/build scripts.  These patches allow nginx
-# to install into a buildroot.
-Patch2:     nginx-auto-install.patch
-Patch1:     nginx-auto-options.patch
-
 # configuration patch to match all the Fedora paths for logs, pid files
 # etc.
-Patch3:     nginx-conf.patch
+Patch1:     nginx-conf.patch
 
 %description
 Nginx [engine x] is an HTTP(S) server, HTTP(S) reverse proxy and IMAP/POP3
 proxy server written by Igor Sysoev.
 
-One third party module, nginx-upstream-fair has been added.
+One third party module, nginx-upstream-fair, has been added.
 
 %prep
 %setup -q
 
 %patch0 -p0
 %patch1 -p0
-%patch2 -p0
-%patch3 -p0
 %{__tar} zxvf %{SOURCE5}
 
 %build
@@ -104,7 +97,6 @@ export DESTDIR=%{buildroot}
     --with-mail_ssl_module \
     --with-cc-opt="%{optflags} $(pcre-config --cflags)" \
     --add-module=%{_builddir}/nginx-%{version}/nginx-upstream-fair
-
 make %{?_smp_mflags} 
 
 # rename the readme for nginx-upstream-fair so it doesn't conflict with the main
@@ -189,6 +181,10 @@ fi
 
 
 %changelog
+* Sun Jul 27 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.32-1
+- update to 0.6.32
+- nginx now supports DESTDIR so removed the patches that enabled it
+
 * Mon May 26 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.31-3
 - update init script
 - remove 'default' listen parameter
