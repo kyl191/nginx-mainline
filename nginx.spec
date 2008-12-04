@@ -9,7 +9,7 @@
 
 Name:           nginx
 Version:        0.6.33
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -155,8 +155,7 @@ fi
 %files
 %defattr(-,root,root,-)
 %doc LICENSE CHANGES README nginx-upstream-fair/README.nginx-upstream-fair
-%dir %{nginx_datadir}
-%{_datadir}/%{name}/*/*
+%{nginx_datadir}/
 %{_sbindir}/%{name}
 %{_mandir}/man3/%{name}.3pm.gz
 %{_initrddir}/%{name}
@@ -183,6 +182,9 @@ fi
 
 
 %changelog
+* Thu Dec  4 2008 Michael Schwendt <mschwendt@fedoraproject.org> - 0.6.33-2
+- Fix inclusion of /usr/share/nginx tree => no unowned directories.
+
 * Sun Nov 23 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.33-1
 - update to 0.6.33
 
