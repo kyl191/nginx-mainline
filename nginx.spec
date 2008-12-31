@@ -8,7 +8,7 @@
 %define nginx_webroot   %{nginx_datadir}/html
 
 Name:           nginx
-Version:        0.6.33
+Version:        0.6.34
 Release:        1%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
@@ -153,8 +153,7 @@ fi
 %files
 %defattr(-,root,root,-)
 %doc LICENSE CHANGES README nginx-upstream-fair/README.nginx-upstream-fair
-%dir %{nginx_datadir}
-%{_datadir}/%{name}/*/*
+%{nginx_datadir}/
 %{_sbindir}/%{name}
 %{_mandir}/man3/%{name}.3pm.gz
 %{_initrddir}/%{name}
@@ -181,6 +180,10 @@ fi
 
 
 %changelog
+* Tue Dec 30 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.34-1
+- update to 0.6.34
+- Fix inclusion of /usr/share/nginx tree => no unowned directories [mschwendt]
+
 * Sun Nov 23 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.33-1
 - update to 0.6.33
 
