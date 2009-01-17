@@ -9,7 +9,7 @@
 
 Name:           nginx
 Version:        0.6.34
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -182,6 +182,9 @@ fi
 
 
 %changelog
+* Sat Jan 17 2009 Tomas Mraz <tmraz@redhat.com> - 0.6.34-2
+- rebuild with new openssl
+
 * Tue Dec 30 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.34-1
 - update to 0.6.34
 
