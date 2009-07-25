@@ -9,7 +9,7 @@
 
 Name:           nginx
 Version:        0.6.36
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -174,6 +174,9 @@ fi
 
 
 %changelog
+* Sat Jul 25 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.6.36-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
+
 * Sun May 17 2009 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.36-2
 - init script updates from Gena Makhomed
 - remove nginx-upstream-fair
