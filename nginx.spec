@@ -140,6 +140,8 @@ fi
 %config(noreplace) %{nginx_confdir}/koi-utf
 %config(noreplace) %{nginx_confdir}/%{name}.conf
 %config(noreplace) %{nginx_confdir}/mime.types
+%config(noreplace) %{nginx_confdir}/fastcgi_params
+%config(noreplace) %{nginx_confdir}/fastcgi_params.default
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 %dir %{perl_vendorarch}/auto/%{name}
 %{perl_vendorarch}/%{name}.pm
