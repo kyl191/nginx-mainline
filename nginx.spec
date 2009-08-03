@@ -8,7 +8,7 @@
 %define nginx_webroot   %{nginx_datadir}/html
 
 Name:           nginx
-Version:        0.6.36
+Version:        0.6.38
 Release:        1%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
@@ -180,6 +180,9 @@ fi
 
 
 %changelog
+* Sun Aug 02 2009 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.38-1
+- update to 0.6.38
+
 * Sat Apr 11 2009 Jeremy Hinegardner <jeremy at hinegardner dot org> 0.6.36-1
 -  update to 0.6.36
 
