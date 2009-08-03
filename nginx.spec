@@ -7,7 +7,7 @@
 %define nginx_datadir   %{_datadir}/nginx
 
 Name:           nginx
-Version:        0.5.37
+Version:        0.6.38
 Release:        1%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
@@ -33,14 +33,9 @@ Source2:    %{name}.logrotate
 # -D_FORTIFY_SOURCE=2 causing warnings to turn into errors.
 Patch0:     nginx-auto-cc-gcc.patch
 
-# nginx has its own configure/build scripts.  These patches allow nginx
-# to install into a buildroot.
-Patch1:     nginx-auto-install.patch
-Patch2:     nginx-auto-options.patch
-
 # configuration patch to match all the Fedora paths for logs, pid files
 # etc.
-Patch3:     nginx-conf.patch
+Patch1:     nginx-conf.patch
 
 %description
 Nginx [engine x] is an HTTP(S) server, HTTP(S) reverse proxy and IMAP/POP3
@@ -51,8 +46,6 @@ proxy server written by Igor Sysoev.
 
 %patch0 -p0
 %patch1 -p0
-%patch2 -p0
-%patch3 -p0
 
 %build
 # nginx does not utilize a standard configure script.  It has its own
@@ -157,6 +150,10 @@ fi
 
 
 %changelog
+* Sun Aug 02 2009 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.38-1
+- 0.5.x branch is no longer in support, updating to newest legacy stable 0.6.38
+- remove unneeded patches
+
 * Sun Jul 27 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.5.37-1
 update to 0.5.37
 
