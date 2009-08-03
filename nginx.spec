@@ -8,7 +8,7 @@
 %define nginx_webroot   %{nginx_datadir}/html
 
 Name:           nginx
-Version:        0.6.36
+Version:        0.7.61
 Release:        1%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
@@ -34,9 +34,7 @@ Source1:    %{name}.init
 Source2:    %{name}.logrotate
 Source3:    virtual.conf
 Source4:    ssl.conf
-Source5:    nginx-upstream-fair.tgz
-Source6:    upstream-fair.conf
-Source7:    %{name}.sysconfig
+Source5:    %{name}.sysconfig
 Source100:  index.html
 Source101:  poweredby.png
 Source102:  nginx-logo.png
@@ -55,15 +53,12 @@ Patch1:     nginx-conf.patch
 Nginx [engine x] is an HTTP(S) server, HTTP(S) reverse proxy and IMAP/POP3
 proxy server written by Igor Sysoev.  
 
-One third party module, nginx-upstream-fair, is added
-
 
 %prep
 %setup -q
 
 %patch0 -p0
 %patch1 -p0
-%{__tar} zxvf %{SOURCE5}
 
 %build
 # nginx does not utilize a standard configure script.  It has its own
@@ -96,13 +91,9 @@ export DESTDIR=%{buildroot}
     --with-http_perl_module \
     --with-mail \
     --with-mail_ssl_module \
-    --with-cc-opt="%{optflags} $(pcre-config --cflags)" \
-    --add-module=%{_builddir}/nginx-%{version}/nginx-upstream-fair
+    --with-cc-opt="%{optflags} $(pcre-config --cflags)"
 make %{?_smp_mflags} 
 
-# rename the readme for nginx-upstream-fair so it doesn't conflict with the main
-# readme
-mv nginx-upstream-fair/README nginx-upstream-fair/README.nginx-upstream-fair
 
 %install
 rm -rf %{buildroot}
@@ -115,9 +106,9 @@ find %{buildroot} -type f -name '*.so' -exec chmod 0755 {} \;
 chmod 0755 %{buildroot}%{_sbindir}/nginx
 %{__install} -p -D -m 0755 %{SOURCE1} %{buildroot}%{_initrddir}/%{name}
 %{__install} -p -D -m 0644 %{SOURCE2} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
-%{__install} -p -D -m 0644 %{SOURCE7} %{buildroot}%{_sysconfdir}/sysconfig/%{name}
+%{__install} -p -D -m 0644 %{SOURCE5} %{buildroot}%{_sysconfdir}/sysconfig/%{name}
 %{__install} -p -d -m 0755 %{buildroot}%{nginx_confdir}/conf.d
-%{__install} -p -m 0644 %{SOURCE3} %{SOURCE4} %{SOURCE6} %{buildroot}%{nginx_confdir}/conf.d
+%{__install} -p -m 0644 %{SOURCE3} %{SOURCE4} %{buildroot}%{nginx_confdir}/conf.d
 %{__install} -p -d -m 0755 %{buildroot}%{nginx_home_tmp}
 %{__install} -p -d -m 0755 %{buildroot}%{nginx_logdir}
 %{__install} -p -d -m 0755 %{buildroot}%{nginx_webroot}
@@ -136,10 +127,14 @@ done
 rm -rf %{buildroot}
 
 %pre
-%{_sbindir}/useradd -c "Nginx user" -s /bin/false -r -d %{nginx_home} %{nginx_user} 2>/dev/null || :
+if [ $1 == 1 ]; then
+    %{_sbindir}/useradd -c "Nginx user" -s /bin/false -r -d %{nginx_home} %{nginx_user} 2>/dev/null || :
+fi
 
 %post
-/sbin/chkconfig --add %{name}
+if [ $1 == 1 ]; then
+    /sbin/chkconfig --add %{name}
+fi
 
 %preun
 if [ $1 = 0 ]; then
@@ -148,13 +143,13 @@ if [ $1 = 0 ]; then
 fi
 
 %postun
-if [ $1 -ge 1 ]; then
-    /sbin/service %{name} condrestart > /dev/null 2>&1 || :
+if [ $1 == 2 ]; then
+    /sbin/service %{name} upgrade || :
 fi
 
 %files
 %defattr(-,root,root,-)
-%doc LICENSE CHANGES README nginx-upstream-fair/README.nginx-upstream-fair
+%doc LICENSE CHANGES README 
 %{nginx_datadir}/
 %{_sbindir}/%{name}
 %{_mandir}/man3/%{name}.3pm.gz
@@ -182,14 +177,24 @@ fi
 
 
 %changelog
+* Sun Aug 02 2009 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.7.61-1
+- update to new stable 0.7.61
+- remove third party module
+
 * Sat Apr 11 2009 Jeremy Hinegardner <jeremy at hinegardner dot org> 0.6.36-1
 -  update to 0.6.36
+
+* Wed Feb 25 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.6.35-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
 
 * Thu Feb 19 2009 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.35-2
 - rebuild
 
 * Thu Feb 19 2009 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.35-1
 - update to 0.6.35
+
+* Sat Jan 17 2009 Tomas Mraz <tmraz@redhat.com> - 0.6.34-2
+- rebuild with new openssl
 
 * Tue Dec 30 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.34-1
 - update to 0.6.34
