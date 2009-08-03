@@ -1,12 +1,13 @@
---- conf/nginx.conf.orig	2008-05-11 21:19:44.000000000 -0600
-+++ conf/nginx.conf	2008-05-11 22:20:32.000000000 -0600
-@@ -1,28 +1,59 @@
+diff -up conf/nginx.conf.orig conf/nginx.conf
+--- conf/nginx.conf.orig	2009-04-06 07:43:46.000000000 -0600
++++ conf/nginx.conf	2009-08-02 18:32:19.000000000 -0600
+@@ -1,28 +1,58 @@
 +#######################################################################
 +#
 +# This is the main Nginx configuration file.  
 +#
 +# More information about the configuration options is available on 
-+#   * the English wiki - http://wiki.codemongers.com/Main
++#   * the English wiki - http://wiki.nginx.org/Main
 +#   * the Russian documentation - http://sysoev.ru/nginx/
 +#
 +#######################################################################
@@ -14,7 +15,7 @@
 +#----------------------------------------------------------------------
 +# Main Module - directives that cover basic functionality
 +#
-+#   http://wiki.codemongers.com/NginxMainModule
++#   http://wiki.nginx.org/NginxHttpMainModule
 +#
 +#----------------------------------------------------------------------
  
@@ -25,22 +26,21 @@
 -#error_log  logs/error.log;
 -#error_log  logs/error.log  notice;
 -#error_log  logs/error.log  info;
-+error_log         /var/log/nginx/error.log;
-+#error_log        /var/log/nginx/error.log  notice;
-+#error_log        /var/log/nginx/error.log  info;
++error_log  /var/log/nginx/error.log;
++#error_log  /var/log/nginx/error.log  notice;
++#error_log  /var/log/nginx/error.log  info;
++
++pid        /var/run/nginx.pid;
  
 -#pid        logs/nginx.pid;
-+pid               /var/run/nginx.pid;
  
- 
-+
 +#----------------------------------------------------------------------
 +# Events Module 
 +#
-+#   http://wiki.codemongers.com/NginxEventsModule
++#   http://wiki.nginx.org/NginxHttpEventsModule
 +#
 +#----------------------------------------------------------------------
-+
+ 
  events {
      worker_connections  1024;
  }
@@ -49,7 +49,7 @@
 +#----------------------------------------------------------------------
 +# HTTP Core Module
 +#
-+#   http://wiki.codemongers.com/NginxHttpCoreModule 
++#   http://wiki.nginx.org/NginxHttpCoreModule 
 +#
 +#----------------------------------------------------------------------
 +
@@ -58,11 +58,11 @@
 +    include       /etc/nginx/mime.types;
      default_type  application/octet-stream;
  
--    #log_format  main  '$remote_addr - $remote_user [$time_local] $request '
--    #                  '"$status" $body_bytes_sent "$http_referer" '
+-    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+-    #                  '$status $body_bytes_sent "$http_referer" '
 -    #                  '"$http_user_agent" "$http_x_forwarded_for"';
-+    log_format  main  '$remote_addr - $remote_user [$time_local] $request '
-+                      '"$status" $body_bytes_sent "$http_referer" '
++    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
++                      '$status $body_bytes_sent "$http_referer" '
 +                      '"$http_user_agent" "$http_x_forwarded_for"';
  
 -    #access_log  logs/access.log  main;
@@ -70,7 +70,7 @@
  
      sendfile        on;
      #tcp_nopush     on;
-@@ -31,27 +62,36 @@
+@@ -31,27 +61,36 @@ http {
      keepalive_timeout  65;
  
      #gzip  on;
@@ -82,9 +82,8 @@
 +    # The default server
 +    #
      server {
--        listen       80;
+         listen       80;
 -        server_name  localhost;
-+        listen       80;
 +        server_name  _;
  
          #charset koi8-r;
@@ -112,7 +111,7 @@
          }
  
          # proxy the PHP scripts to Apache listening on 127.0.0.1:80
-@@ -77,42 +117,4 @@
+@@ -77,42 +116,4 @@ http {
          #    deny  all;
          #}
      }
