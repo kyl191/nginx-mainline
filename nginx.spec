@@ -8,7 +8,7 @@
 
 Name:           nginx
 Version:        0.6.38
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -152,6 +152,9 @@ fi
 
 
 %changelog
+* Sun Aug 02 2009 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.38-2
+- rebuilt
+
 * Sun Aug 02 2009 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.38-1
 - 0.5.x branch is no longer in support, updating to newest legacy stable 0.6.38
 - remove unneeded patches
