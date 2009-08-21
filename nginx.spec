@@ -9,7 +9,7 @@
 
 Name:           nginx
 Version:        0.7.61
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -174,6 +174,9 @@ fi
 
 
 %changelog
+* Fri Aug 21 2009 Tomas Mraz <tmraz@redhat.com> - 0.7.61-2
+- rebuilt with new openssl
+
 * Sun Aug 02 2009 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.7.61-1
 - Update to new stable 0.7.61
 
