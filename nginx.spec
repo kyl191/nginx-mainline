@@ -8,8 +8,8 @@
 %define nginx_webroot   %{nginx_datadir}/html
 
 Name:           nginx
-Version:        0.7.61
-Release:        2%{?dist}
+Version:        0.7.62
+Release:        1%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -20,7 +20,7 @@ URL:            http://nginx.net/
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:      pcre-devel,zlib-devel,openssl-devel,perl-devel,perl(ExtUtils::Embed)
-Requires:           pcre,zlib,openssl
+Requires:           pcre,openssl
 Requires:           perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 # for /usr/sbin/useradd
 Requires(pre):      shadow-utils
@@ -174,6 +174,11 @@ fi
 
 
 %changelog
+* Mon Sep 14 2009 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.7.62-1
+- Update to new stable 0.7.62
+- fixes CVE-2009-2629
+- fix rpmlint zlib dependency complaint
+
 * Fri Aug 21 2009 Tomas Mraz <tmraz@redhat.com> - 0.7.61-2
 - rebuilt with new openssl
 
