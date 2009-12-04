@@ -9,7 +9,7 @@
 
 Name:           nginx
 Version:        0.6.39
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -50,6 +50,10 @@ Patch0:     nginx-auto-cc-gcc.patch
 # configuration patch to match all the Fedora paths for logs, pid files
 # etc.
 Patch1:     nginx-conf.patch
+
+#patch for http://www.kb.cert.org/vuls/id/120541
+Patch2:     nginx-cve-2009-3555.patch
+
 
 %description
 Nginx [engine x] is an HTTP(S) server, HTTP(S) reverse proxy and IMAP/POP3
@@ -180,6 +184,9 @@ fi
 
 
 %changelog
+* Fri Dec 04 2009 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.39-2
+- fixes CVE-2009-3555
+
 * Mon Sep 14 2009 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.39-1
 - update to 0.6.39
 - fixes CVE-2009-2629
