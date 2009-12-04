@@ -174,6 +174,9 @@ fi
 
 
 %changelog
+* Fri Dec 04 2009 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.7.64-1
+- Update to new stable 0.7.64
+
 * Tue Oct 29 2009 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.7.63-1
 - Update to new stable 0.7.63
 - reinstate zlib dependency
