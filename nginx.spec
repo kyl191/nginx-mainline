@@ -8,7 +8,7 @@
 %define nginx_webroot   %{nginx_datadir}/html
 
 Name:           nginx
-Version:        0.7.64
+Version:        0.7.65
 Release:        1%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
@@ -86,11 +86,14 @@ export DESTDIR=%{buildroot}
     --with-http_dav_module \
     --with-http_flv_module \
     --with-http_gzip_static_module \
+    --with-http_random_index_module \
+    --with-http_secure_link_module \
     --with-http_stub_status_module \
     --with-http_perl_module \
     --with-mail \
     --with-mail_ssl_module \
-    --with-cc-opt="%{optflags} $(pcre-config --cflags)" 
+    --with-ipv6 \
+    --with-cc-opt="%{optflags} $(pcre-config --cflags)"
 make %{?_smp_mflags} 
 
 %install
@@ -153,10 +156,13 @@ fi
 %{_initrddir}/%{name}
 %dir %{nginx_confdir}
 %dir %{nginx_confdir}/conf.d
+%dir %{nginx_logdir}
 %config(noreplace) %{nginx_confdir}/conf.d/*.conf
 %config(noreplace) %{nginx_confdir}/win-utf
 %config(noreplace) %{nginx_confdir}/%{name}.conf.default
 %config(noreplace) %{nginx_confdir}/mime.types.default
+%config(noreplace) %{nginx_confdir}/fastcgi.conf
+%config(noreplace) %{nginx_confdir}/fastcgi.conf.default
 %config(noreplace) %{nginx_confdir}/fastcgi_params
 %config(noreplace) %{nginx_confdir}/fastcgi_params.default
 %config(noreplace) %{nginx_confdir}/koi-win
@@ -170,10 +176,16 @@ fi
 %{perl_vendorarch}/auto/%{name}/%{name}.so
 %attr(-,%{nginx_user},%{nginx_group}) %dir %{nginx_home}
 %attr(-,%{nginx_user},%{nginx_group}) %dir %{nginx_home_tmp}
-%attr(-,%{nginx_user},%{nginx_group}) %dir %{nginx_logdir}
 
 
 %changelog
+* Mon Feb 15 2010 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.7.65-1
+- Update to new stable 0.7.65
+- change ownership of logdir to root:root
+- add support for ipv6 (bug #561248)
+- add random_index_module
+- add secure_link_module
+
 * Fri Dec 04 2009 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.7.64-1
 - Update to new stable 0.7.64
 
