@@ -8,7 +8,7 @@
 
 Name:           nginx
 Version:        0.6.39
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -156,6 +156,9 @@ fi
 
 
 %changelog
+* Mon Feb 15 2010 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.39-3
+- fix bug #554914 
+
 * Fri Dec 04 2009 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.39-2
 - fixes CVE-2009-3555
 
