@@ -9,7 +9,7 @@
 
 Name:           nginx
 Version:        0.6.39
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -163,6 +163,7 @@ fi
 %{_initrddir}/%{name}
 %dir %{nginx_confdir}
 %dir %{nginx_confdir}/conf.d
+%dir %{nginx_logdir}
 %config(noreplace) %{nginx_confdir}/conf.d/*.conf
 %config(noreplace) %{nginx_confdir}/win-utf
 %config(noreplace) %{nginx_confdir}/%{name}.conf.default
@@ -180,10 +181,12 @@ fi
 %{perl_vendorarch}/auto/%{name}/%{name}.so
 %attr(-,%{nginx_user},%{nginx_group}) %dir %{nginx_home}
 %attr(-,%{nginx_user},%{nginx_group}) %dir %{nginx_home_tmp}
-%attr(-,%{nginx_user},%{nginx_group}) %dir %{nginx_logdir}
 
 
 %changelog
+* Mon Feb 15 2010 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.39-4
+- change directory ownership of log dir to root:root
+
 * Mon Feb 15 2010 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.39-3
 - fix bug #554914 
 
