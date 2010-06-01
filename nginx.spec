@@ -9,7 +9,7 @@
 
 Name:           nginx
 Version:        0.7.65
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -179,6 +179,9 @@ fi
 
 
 %changelog
+* Tue Jun 01 2010 Marcela Maslanova <mmaslano@redhat.com> - 0.7.65-2
+- Mass rebuild with perl-5.12.0
+
 * Mon Feb 15 2010 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.7.65-1
 - Update to new stable 0.7.65
 - change ownership of logdir to root:root
