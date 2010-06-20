@@ -49,7 +49,7 @@ Source104:  404.html
 Patch0:     nginx-auto-cc-gcc.patch
 
 #patch for http://www.kb.cert.org/vuls/id/120541
-Patch2:     nginx-cve-2009-3555.patch
+Patch1:     nginx-cve-2009-3555.patch
 
 
 %description
