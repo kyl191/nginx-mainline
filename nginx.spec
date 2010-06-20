@@ -8,9 +8,9 @@
 %define nginx_webroot   %{nginx_datadir}/html
 
 Name:           nginx
-Version:        0.7.65
+Version:        0.7.67
 Release:        1%{?dist}
-Summary:        Robust, small and high performance http and reverse proxy server
+Summary:        Robust, small and high performance HTTP and reverse proxy server
 Group:          System Environment/Daemons   
 
 # BSD License (two clause)
@@ -35,6 +35,7 @@ Source2:    %{name}.logrotate
 Source3:    virtual.conf
 Source4:    ssl.conf
 Source5:    %{name}.sysconfig
+Source6:    nginx.conf
 Source100:  index.html
 Source101:  poweredby.png
 Source102:  nginx-logo.png
@@ -45,10 +46,6 @@ Source104:  404.html
 # -D_FORTIFY_SOURCE=2 causing warnings to turn into errors.
 Patch0:     nginx-auto-cc-gcc.patch
 
-# configuration patch to match all the Fedora paths for logs, pid files
-# etc.
-Patch1:     nginx-conf.patch
-
 %description
 Nginx [engine x] is an HTTP(S) server, HTTP(S) reverse proxy and IMAP/POP3
 proxy server written by Igor Sysoev.
@@ -57,7 +54,6 @@ proxy server written by Igor Sysoev.
 %setup -q
 
 %patch0 -p0
-%patch1 -p0
 
 %build
 # nginx does not utilize a standard configure script.  It has its own
@@ -93,7 +89,7 @@ export DESTDIR=%{buildroot}
     --with-mail \
     --with-mail_ssl_module \
     --with-ipv6 \
-    --with-cc-opt="%{optflags} $(pcre-config --cflags)" 
+    --with-cc-opt="%{optflags} $(pcre-config --cflags)"
 make %{?_smp_mflags} 
 
 %install
@@ -110,6 +106,7 @@ chmod 0755 %{buildroot}%{_sbindir}/nginx
 %{__install} -p -D -m 0644 %{SOURCE5} %{buildroot}%{_sysconfdir}/sysconfig/%{name}
 %{__install} -p -d -m 0755 %{buildroot}%{nginx_confdir}/conf.d
 %{__install} -p -m 0644 %{SOURCE3} %{SOURCE4} %{buildroot}%{nginx_confdir}/conf.d
+%{__install} -p -m 0644 %{SOURCE6} %{buildroot}%{nginx_confdir}
 %{__install} -p -d -m 0755 %{buildroot}%{nginx_home_tmp}
 %{__install} -p -d -m 0755 %{buildroot}%{nginx_logdir}
 %{__install} -p -d -m 0755 %{buildroot}%{nginx_webroot}
@@ -179,6 +176,10 @@ fi
 
 
 %changelog
+* Sun Jun 20 2010 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.7.67-1
+- Update to new stable 0.7.67
+- fix bugzilla #591543
+
 * Mon Feb 15 2010 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.7.65-1
 - Update to new stable 0.7.65
 - change ownership of logdir to root:root
