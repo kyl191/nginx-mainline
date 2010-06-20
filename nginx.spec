@@ -9,7 +9,7 @@
 
 Name:           nginx
 Version:        0.6.39
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Robust, small and high performance http and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -37,6 +37,7 @@ Source4:    ssl.conf
 Source5:    nginx-upstream-fair.tgz
 Source6:    upstream-fair.conf
 Source7:    %{name}.sysconfig
+Source8:    %{name}.conf
 Source100:  index.html
 Source101:  poweredby.png
 Source102:  nginx-logo.png
@@ -46,10 +47,6 @@ Source104:  404.html
 # removes -Werror in upstream build scripts.  -Werror conflicts with
 # -D_FORTIFY_SOURCE=2 causing warnings to turn into errors.
 Patch0:     nginx-auto-cc-gcc.patch
-
-# configuration patch to match all the Fedora paths for logs, pid files
-# etc.
-Patch1:     nginx-conf.patch
 
 #patch for http://www.kb.cert.org/vuls/id/120541
 Patch2:     nginx-cve-2009-3555.patch
@@ -120,6 +117,7 @@ chmod 0755 %{buildroot}%{_sbindir}/nginx
 %{__install} -p -D -m 0644 %{SOURCE2} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
 %{__install} -p -D -m 0644 %{SOURCE7} %{buildroot}%{_sysconfdir}/sysconfig/%{name}
 %{__install} -p -d -m 0755 %{buildroot}%{nginx_confdir}/conf.d
+%{__install} -p -m 0644 %{SOURCE8} %{buildroot}%{nginx_confdir}
 %{__install} -p -m 0644 %{SOURCE3} %{SOURCE4} %{SOURCE6} %{buildroot}%{nginx_confdir}/conf.d
 %{__install} -p -d -m 0755 %{buildroot}%{nginx_home_tmp}
 %{__install} -p -d -m 0755 %{buildroot}%{nginx_logdir}
@@ -184,6 +182,9 @@ fi
 
 
 %changelog
+* Sun Jun 20 2010 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.39-5
+- fix bug #591543
+
 * Mon Feb 15 2010 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.6.39-4
 - change directory ownership of log dir to root:root
 
