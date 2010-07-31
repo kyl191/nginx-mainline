@@ -28,6 +28,7 @@ Requires(post):     chkconfig
 # for /sbin/service
 Requires(preun):    chkconfig, initscripts
 Requires(postun):   initscripts
+Provides:           webserver
 
 Source0:    http://sysoev.ru/nginx/nginx-%{version}.tar.gz
 Source1:    %{name}.init
@@ -176,6 +177,9 @@ fi
 
 
 %changelog
+* Sat Jul 31 2010 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.7.67-2
+- add Provides: webserver (bug #619693)
+
 * Sun Jun 20 2010 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.7.67-1
 - Update to new stable 0.7.67
 - fix bugzilla #591543
