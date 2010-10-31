@@ -9,7 +9,7 @@
 
 Name:           nginx
 Version:        0.8.53
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Robust, small and high performance HTTP and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -98,7 +98,8 @@ export DESTDIR=%{buildroot}
     --with-file-aio \
     --with-mail_ssl_module \
     --with-ipv6 \
-    --with-cc-opt="%{optflags} $(pcre-config --cflags)"
+    --with-cc-opt="%{optflags} $(pcre-config --cflags)" \
+    --with-ld-opt="-Wl,-E" # so the perl module finds its symbols
 make %{?_smp_mflags} 
 
 %install
@@ -189,6 +190,9 @@ fi
 
 
 %changelog
+* Sun Oct 31 2010 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.8.53-2
+- Fix linking of perl module
+
 * Sun Oct 31 2010 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.8.53-1
 - Update to new stable 0.8.53
 
