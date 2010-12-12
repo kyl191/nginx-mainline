@@ -62,11 +62,11 @@ reload() {
 }
 
 configtest() {
-  $nginx -t -c $NGINX_CONF_FILE
+    $nginx -t -c $NGINX_CONF_FILE
 }
 
 configtest_q() {
-    configtest >/dev/null 2>&1
+    $nginx -t -q -c $NGINX_CONF_FILE
 }
 
 rh_status() {
