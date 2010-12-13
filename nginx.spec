@@ -9,7 +9,7 @@
 
 Name:           nginx
 Version:        0.8.53
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Robust, small and high performance HTTP and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -38,6 +38,7 @@ Source3:    virtual.conf
 Source4:    ssl.conf
 Source5:    %{name}.sysconfig
 Source6:    nginx.conf
+Source7:    default.conf
 Source100:  index.html
 Source101:  poweredby.png
 Source102:  nginx-logo.png
@@ -115,7 +116,7 @@ chmod 0755 %{buildroot}%{_sbindir}/nginx
 %{__install} -p -D -m 0644 %{SOURCE2} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
 %{__install} -p -D -m 0644 %{SOURCE5} %{buildroot}%{_sysconfdir}/sysconfig/%{name}
 %{__install} -p -d -m 0755 %{buildroot}%{nginx_confdir}/conf.d
-%{__install} -p -m 0644 %{SOURCE3} %{SOURCE4} %{buildroot}%{nginx_confdir}/conf.d
+%{__install} -p -m 0644 %{SOURCE3} %{SOURCE4} %{SOURCE7} %{buildroot}%{nginx_confdir}/conf.d
 %{__install} -p -m 0644 %{SOURCE6} %{buildroot}%{nginx_confdir}
 %{__install} -p -d -m 0755 %{buildroot}%{nginx_home_tmp}
 %{__install} -p -d -m 0755 %{buildroot}%{nginx_logdir}
@@ -190,6 +191,9 @@ fi
 
 
 %changelog
+* Sun Dec 12 2010 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.8.53.5
+- Extract out default config into its own file (bug #635776)
+
 * Sun Dec 12 2010 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.8.53-4
 - Revert ownership of log dir
 
