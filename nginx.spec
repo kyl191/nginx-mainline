@@ -9,7 +9,7 @@
 
 Name:           nginx
 Version:        0.8.53
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Robust, small and high performance HTTP and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -163,6 +163,7 @@ fi
 %{_initrddir}/%{name}
 %dir %{nginx_confdir}
 %dir %{nginx_confdir}/conf.d
+%dir %{nginx_logdir}
 %config(noreplace) %{nginx_confdir}/conf.d/*.conf
 %config(noreplace) %{nginx_confdir}/win-utf
 %config(noreplace) %{nginx_confdir}/%{name}.conf.default
@@ -184,12 +185,14 @@ fi
 %dir %{perl_vendorarch}/auto/%{name}
 %{perl_vendorarch}/%{name}.pm
 %{perl_vendorarch}/auto/%{name}/%{name}.so
-%attr(0700,%{nginx_user},%{nginx_group}) %dir %{nginx_logdir}
-%attr(0700,%{nginx_user},%{nginx_group}) %dir %{nginx_home}
-%attr(0700,%{nginx_user},%{nginx_group}) %dir %{nginx_home_tmp}
+%attr(-,%{nginx_user},%{nginx_group}) %dir %{nginx_home}
+%attr(-,%{nginx_user},%{nginx_group}) %dir %{nginx_home_tmp}
 
 
 %changelog
+* Sun Dec 12 2010 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.8.53-4
+- Revert ownership of log dir
+
 * Sun Dec 12 2010 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.8.53-3
 - Change ownership of /var/log/nginx to be 0700 nginx:nginx
 - update init script to use killproc -p
