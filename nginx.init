@@ -91,19 +91,20 @@ upgrade() {
     sleep 1
     if [[ -f ${oldbin_pidfile} && -f ${pidfile} ]];  then
         killproc -p $oldbin_pidfile $prog -QUIT
-        success $"$nginx online upgrade"
+        success $"$prog online upgrade"
         echo 
         return 0
     else
-        failure $"$nginx online upgrade"
+        failure $"$prog online upgrade"
+        echo
         return 1
     fi
 }
 
-# Tell nginx to rotate its logs
-rotate() {
+# Tell nginx to reopen logs
+reopen_logs() {
     configtest_q || return 6
-    echo -n $"Rotating $nginx logs: "
+    echo -n $"Reopening $prog logs: "
     killproc -p $pidfile $prog -USR1
     retval=$?
     echo
@@ -119,7 +120,7 @@ case "$1" in
         rh_status_q || exit 0
         $1
         ;;
-    restart|configtest|rotate)
+    restart|configtest|reopen_logs)
         $1
         ;;
     force-reload|upgrade) 
@@ -138,6 +139,6 @@ case "$1" in
         restart
 	    ;;
     *)
-        echo $"Usage: $0 {start|stop|reload|configtest|status|force-reload|upgrade|restart|rotate}"
+        echo $"Usage: $0 {start|stop|reload|configtest|status|force-reload|upgrade|restart|reopen_logs}"
         exit 2
 esac
