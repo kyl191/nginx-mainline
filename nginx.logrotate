@@ -6,7 +6,7 @@
     compress
     sharedscripts
     postrotate
-        [ ! -f /var/run/nginx.pid ] || kill -USR1 `cat /var/run/nginx.pid`
+        /etc/init.d/nginx rotate
     endscript
 }
 

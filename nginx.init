@@ -22,11 +22,14 @@
 nginx="/usr/sbin/nginx"
 prog=$(basename $nginx)
 
+sysconfig="/etc/sysconfig/$prog"
+lockfile="/var/lock/subsys/$prog"
+pidfile="/var/run/${prog}.pid"
+
 NGINX_CONF_FILE="/etc/nginx/nginx.conf"
 
-[ -f /etc/sysconfig/nginx ] && . /etc/sysconfig/nginx
+[ -f $sysconfig ] && . $sysconfig
 
-lockfile=/var/lock/subsys/nginx
 
 start() {
     [ -x $nginx ] || exit 5
@@ -41,7 +44,7 @@ start() {
 
 stop() {
     echo -n $"Stopping $prog: "
-    killproc $prog
+    killproc -p $pidfile $prog
     retval=$?
     echo
     [ $retval -eq 0 ] && rm -f $lockfile
@@ -49,15 +52,15 @@ stop() {
 }
 
 restart() {
-    configtest_q || configtest || return 6
+    configtest_q || return 6
     stop
     start
 }
 
 reload() {
-    configtest_q || configtest || return 6
+    configtest_q || return 6
     echo -n $"Reloading $prog: "
-    killproc $nginx -HUP
+    killproc -p $pidfile $prog -HUP
     echo
 }
 
@@ -79,25 +82,32 @@ rh_status_q() {
 
 # Upgrade the binary with no downtime.
 upgrade() {
-    local pidfile="/var/run/${prog}.pid"
     local oldbin_pidfile="${pidfile}.oldbin"
 
-    configtest_q || configtest || return 6
-    echo -n $"Staring new master $prog: "
-    killproc $nginx -USR2
+    configtest_q || return 6
+    echo -n $"Upgrading $prog: "
+    killproc -p $pidfile $prog -USR2
     retval=$?
-    echo 
     sleep 1
     if [[ -f ${oldbin_pidfile} && -f ${pidfile} ]];  then
-        echo -n $"Graceful shutdown of old $prog: "
-        killproc -p ${oldbin_pidfile} -QUIT
-        retval=$?
+        killproc -p $oldbin_pidfile $prog -QUIT
+        success $"$nginx online upgrade"
         echo 
         return 0
     else
-        echo $"Something bad happened, manual intervention required, maybe restart?"
+        failure $"$nginx online upgrade"
         return 1
     fi
+}
+
+# Tell nginx to rotate its logs
+rotate() {
+    configtest_q || return 6
+    echo -n $"Rotating $nginx logs: "
+    killproc -p $pidfile $prog -USR1
+    retval=$?
+    echo
+    return $retval
 }
 
 case "$1" in
@@ -109,7 +119,7 @@ case "$1" in
         rh_status_q || exit 0
         $1
         ;;
-    restart|configtest)
+    restart|configtest|rotate)
         $1
         ;;
     force-reload|upgrade) 
@@ -128,6 +138,6 @@ case "$1" in
         restart
 	    ;;
     *)
-        echo $"Usage: $0 {start|stop|reload|configtest|status|force-reload|upgrade|restart}"
+        echo $"Usage: $0 {start|stop|reload|configtest|status|force-reload|upgrade|restart|rotate}"
         exit 2
 esac
