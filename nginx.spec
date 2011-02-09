@@ -9,7 +9,7 @@
 
 Name:           nginx
 Version:        0.8.53
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Robust, small and high performance HTTP and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -191,6 +191,9 @@ fi
 
 
 %changelog
+* Tue Feb 08 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.8.53-6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
+
 * Sun Dec 12 2010 Jeremy Hinegardner <jeremy at hinegardner dot org> - 0.8.53.5
 - Extract out default config into its own file (bug #635776)
 
