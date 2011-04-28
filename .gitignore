@@ -5,3 +5,4 @@ x86_64/
 .*.log
 *swp
 *.rpm
+/nginx-1.0.0.tar.gz

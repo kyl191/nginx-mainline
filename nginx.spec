@@ -8,8 +8,8 @@
 %define nginx_webroot   %{nginx_datadir}/html
 
 Name:           nginx
-Version:        0.8.53
-Release:        6%{?dist}
+Version:        1.0.0
+Release:        1%{?dist}
 Summary:        Robust, small and high performance HTTP and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -191,6 +191,9 @@ fi
 
 
 %changelog
+* Wed Apr 27 2011 Jeremy Hinegardner <jeremy at hinegardner dot org> - 1.0.0-1
+- Update to 1.0.0
+
 * Tue Feb 08 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.8.53-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 
