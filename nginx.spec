@@ -9,7 +9,7 @@
 
 Name:           nginx
 Version:        1.0.0
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Robust, small and high performance HTTP and reverse proxy server
 Group:          System Environment/Daemons   
 
@@ -191,6 +191,9 @@ fi
 
 
 %changelog
+* Fri Feb 10 2012 Petr Pisar <ppisar@redhat.com> - 1.0.0-5
+- Rebuild against PCRE 8.30
+
 * Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0.0-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
