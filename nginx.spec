@@ -8,15 +8,15 @@
 %define nginx_webroot   %{nginx_datadir}/html
 
 Name:           nginx
-Version:        1.0.0
-Release:        5%{?dist}
+Version:        1.0.12
+Release:        1%{?dist}
 Summary:        Robust, small and high performance HTTP and reverse proxy server
-Group:          System Environment/Daemons   
+Group:          System Environment/Daemons
 
 # BSD License (two clause)
 # http://www.freebsd.org/copyright/freebsd-license.html
 License:        BSD
-URL:            http://nginx.net/ 
+URL:            http://nginx.net/
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:      pcre-devel,zlib-devel,openssl-devel,perl-devel,perl(ExtUtils::Embed)
@@ -89,6 +89,7 @@ export DESTDIR=%{buildroot}
     --with-http_sub_module \
     --with-http_dav_module \
     --with-http_flv_module \
+    --with-http_mp4_module \
     --with-http_gzip_static_module \
     --with-http_random_index_module \
     --with-http_secure_link_module \
@@ -191,6 +192,9 @@ fi
 
 
 %changelog
+* Sun Feb 19 2012 Jeremy Hinegardner <jeremy at hinegardner dot org> - 1.0.12-1
+- UPdate to 1.0.12
+
 * Fri Feb 10 2012 Petr Pisar <ppisar@redhat.com> - 1.0.0-5
 - Rebuild against PCRE 8.30
 
