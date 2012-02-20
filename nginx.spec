@@ -31,7 +31,7 @@ Requires(preun):    chkconfig, initscripts
 Requires(postun):   initscripts
 Provides:           webserver
 
-Source0:    http://sysoev.ru/nginx/nginx-%{version}.tar.gz
+Source0:    http://nginx.org/download/nginx-%{version}.tar.gz
 Source1:    %{name}.init
 Source2:    %{name}.logrotate
 Source3:    virtual.conf
