@@ -10,7 +10,7 @@
 Name:              nginx
 Epoch:             1
 Version:           1.0.12
-Release:           2%{?dist}
+Release:           3%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -148,7 +148,7 @@ install -p -m 0644 %{SOURCE103} %{SOURCE104} \
 if [ $1 -eq 1 ]; then
     getent group %{nginx_group} > /dev/null || groupadd -r %{nginx_group}
     getent passwd %{nginx_user} > /dev/null || \
-        useradd -r -d %{nginx_home} \
+        useradd -r -d %{nginx_home} -g %{nginx_group} \
         -s /sbin/nologin -c "Nginx web server" %{nginx_user}
     exit 0
 fi
@@ -212,6 +212,9 @@ fi
 
 
 %changelog
+* Sun Mar 04 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> 1:1.0.12-3
+- fix %%pre scriptlet
+
 * Mon Feb 20 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> 1:1.0.12-2
 - update upstream URL
 - replace %%define with %%global
