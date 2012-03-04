@@ -10,7 +10,7 @@
 Name:              nginx
 Epoch:             1
 Version:           1.0.12
-Release:           3%{?dist}
+Release:           5%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -212,6 +212,9 @@ fi
 
 
 %changelog
+* Sun Mar 04 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> 1:1.0.12-5
+- change pid path in nginx.conf to match systemd service file
+
 * Sun Mar 04 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> 1:1.0.12-3
 - fix %%pre scriptlet
 
