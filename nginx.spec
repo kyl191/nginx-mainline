@@ -9,8 +9,8 @@
 
 Name:              nginx
 Epoch:             1
-Version:           1.0.12
-Release:           5%{?dist}
+Version:           1.0.13
+Release:           1%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -84,8 +84,8 @@ export DESTDIR=%{buildroot}
     --http-fastcgi-temp-path=%{nginx_home_tmp}/fastcgi \
     --http-uwsgi-temp-path=%{nginx_home_tmp}/uwsgi \
     --http-scgi-temp-path=%{nginx_home_tmp}/scgi \
-    --pid-path=%{_localstatedir}/run/nginx.pid \
-    --lock-path=%{_localstatedir}/lock/subsys/nginx \
+    --pid-path=/run/nginx.pid \
+    --lock-path=/run/lock/subsys/nginx \
     --user=%{nginx_user} \
     --group=%{nginx_group} \
     --with-file-aio \
@@ -212,6 +212,10 @@ fi
 
 
 %changelog
+* Tue Mar 06 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> 1:1.0.13-1
+- update to upstream release 1.0.13
+- amend --pid-path and --log-path
+
 * Sun Mar 04 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> 1:1.0.12-5
 - change pid path in nginx.conf to match systemd service file
 
