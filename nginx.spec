@@ -9,7 +9,7 @@
 
 Name:              nginx
 Epoch:             1
-Version:           1.0.13
+Version:           1.0.14
 Release:           1%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
@@ -212,17 +212,21 @@ fi
 
 
 %changelog
-* Tue Mar 06 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> 1:1.0.13-1
+* Thu Mar 15 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> - 1:1.0.14-1
+- update to upstream release 1.0.14
+- amend some %%changelog formatting
+
+* Tue Mar 06 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> - 1:1.0.13-1
 - update to upstream release 1.0.13
 - amend --pid-path and --log-path
 
-* Sun Mar 04 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> 1:1.0.12-5
+* Sun Mar 04 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> - 1:1.0.12-5
 - change pid path in nginx.conf to match systemd service file
 
-* Sun Mar 04 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> 1:1.0.12-3
+* Sun Mar 04 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> - 1:1.0.12-3
 - fix %%pre scriptlet
 
-* Mon Feb 20 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> 1:1.0.12-2
+* Mon Feb 20 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> - 1:1.0.12-2
 - update upstream URL
 - replace %%define with %%global
 - remove obsolete BuildRoot tag, %%clean section and %%defattr
