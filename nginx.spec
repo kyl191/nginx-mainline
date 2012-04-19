@@ -11,7 +11,7 @@
 Name:              nginx
 Epoch:             1
 Version:           1.0.15
-Release:           1%{?dist}
+Release:           2%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -35,7 +35,7 @@ Source104:         50x.html
 
 # removes -Werror in upstream build scripts.  -Werror conflicts with
 # -D_FORTIFY_SOURCE=2 causing warnings to turn into errors.
-#Patch0:            nginx-auto-cc-gcc.patch
+Patch0:            nginx-auto-cc-gcc.patch
 
 BuildRequires:     GeoIP-devel
 BuildRequires:     gd-devel
@@ -65,7 +65,7 @@ memory usage.
 
 %prep
 %setup -q
-#%patch0 -p0
+%patch0 -p0
 
 
 %build
@@ -213,7 +213,10 @@ fi
 
 
 %changelog
-* Sat Apr 14 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk. - 1:1.0.15-1
+* Thu Apr 19 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> - 1:1.0.15-2
+- renable auto-cc-gcc patch due to warnings on rawhide
+
+* Sat Apr 14 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> - 1:1.0.15-1
 - update to upstream release 1.0.15
 - no need to apply auto-cc-gcc patch
 - add %%global _hardened_build 1
