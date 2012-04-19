@@ -5,3 +5,4 @@ x86_64/
 *swp
 *.rpm
 /nginx-1.0.14.tar.gz
+/nginx-1.0.15.tar.gz
