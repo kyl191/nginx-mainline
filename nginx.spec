@@ -11,7 +11,7 @@
 Name:              nginx
 Epoch:             1
 Version:           1.0.15
-Release:           2%{?dist}
+Release:           3%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -213,6 +213,9 @@ fi
 
 
 %changelog
+* Mon May 14 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> - 1:1.0.15-3
+- fix incorrect postrotate script in nginx.logrotate
+
 * Thu Apr 19 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> - 1:1.0.15-2
 - renable auto-cc-gcc patch due to warnings on rawhide
 
