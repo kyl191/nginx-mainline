@@ -10,8 +10,8 @@
 
 Name:              nginx
 Epoch:             1
-Version:           1.0.15
-Release:           4%{?dist}
+Version:           1.2.0
+Release:           1%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -219,6 +219,9 @@ fi
 
 
 %changelog
+* Wed May 16 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> - 1:1.2.0-1
+- update to upstream release 1.2.0
+
 * Wed May 16 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> - 1:1.0.15-4
 - add nginx-upgrade to replace functionality from the nginx initscript
   that was lost after migration to systemd

@@ -6,3 +6,4 @@ x86_64/
 *.rpm
 /nginx-1.0.14.tar.gz
 /nginx-1.0.15.tar.gz
+/nginx-1.2.0.tar.gz
