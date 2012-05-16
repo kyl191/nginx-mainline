@@ -11,7 +11,7 @@
 Name:              nginx
 Epoch:             1
 Version:           1.0.15
-Release:           3%{?dist}
+Release:           4%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -27,6 +27,8 @@ Source3:           nginx.conf
 Source4:           default.conf
 Source5:           ssl.conf
 Source6:           virtual.conf
+Source7:           nginx-upgrade
+Source8:           README.fedora
 Source100:         index.html
 Source101:         poweredby.png
 Source102:         nginx-logo.png
@@ -66,6 +68,7 @@ memory usage.
 %prep
 %setup -q
 %patch0 -p0
+cp -a %{SOURCE8} .
 
 
 %build
@@ -144,6 +147,8 @@ install -p -m 0644 %{SOURCE101} %{SOURCE102} \
 install -p -m 0644 %{SOURCE103} %{SOURCE104} \
     %{buildroot}%{nginx_webroot}
 
+install -p -D -m 0755 %{SOURCE7} %{buildroot}%{_bindir}/nginx-upgrade
+
 
 %pre
 if [ $1 -eq 1 ]; then
@@ -180,8 +185,9 @@ fi
 
 
 %files
-%doc LICENSE CHANGES README
+%doc LICENSE CHANGES README README.fedora
 %{nginx_datadir}/
+%{_bindir}/nginx-upgrade
 %{_sbindir}/nginx
 %{_mandir}/man3/nginx.3pm.gz
 %{_unitdir}/nginx.service
@@ -213,6 +219,17 @@ fi
 
 
 %changelog
+* Wed May 16 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> - 1:1.0.15-4
+- add nginx-upgrade to replace functionality from the nginx initscript
+  that was lost after migration to systemd
+- add README.fedora to describe usage of nginx-upgrade
+- nginx.logrotate: use built-in systemd kill command in postrotate script
+- nginx.service: start after syslog.target and network.target
+- nginx.service: remove unnecessary references to config file location
+- nginx.service: use /bin/kill instead of "/usr/sbin/nginx -s" following
+  advice from nginx-devel
+- nginx.service: use private /tmp
+
 * Mon May 14 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> - 1:1.0.15-3
 - fix incorrect postrotate script in nginx.logrotate
 

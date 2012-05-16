@@ -1,0 +1,15 @@
+Upgrade without any downtime
+============================
+
+Before migration to systemd, the nginx initscript provided the ability to
+upgrade the running nginx server without any downtime.
+
+This functionality has now been replaced with a downstream shell script,
+located at /usr/bin/nginx-upgrade.
+
+Following an update to nginx via the package manager, running nginx-upgrade
+will cause a new nginx master to be created, which will then take all new
+requests. The old master and workers are then gracefully shutdown without
+breaking any existing connections.
+
+See http://wiki.nginx.org/CommandLine for more information.
