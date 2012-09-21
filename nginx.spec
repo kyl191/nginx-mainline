@@ -10,8 +10,8 @@
 
 Name:              nginx
 Epoch:             1
-Version:           1.2.1
-Release:           3%{?dist}
+Version:           1.2.3
+Release:           1%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -219,6 +219,9 @@ fi
 
 
 %changelog
+* Fri Sep 21 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> - 1:1.2.3-1
+- update to upstream release 1.2.3
+
 * Fri Jul 20 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:1.2.1-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 
