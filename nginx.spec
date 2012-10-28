@@ -10,7 +10,7 @@
 
 Name:              nginx
 Epoch:             1
-Version:           1.2.3
+Version:           1.2.4
 Release:           1%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
@@ -24,11 +24,8 @@ Source0:           http://nginx.org/download/nginx-%{version}.tar.gz
 Source1:           nginx.service
 Source2:           nginx.logrotate
 Source3:           nginx.conf
-Source4:           default.conf
-Source5:           ssl.conf
-Source6:           virtual.conf
-Source7:           nginx-upgrade
-Source8:           README.fedora
+Source4:           nginx-upgrade
+Source5:           nginx-upgrade.8
 Source100:         index.html
 Source101:         poweredby.png
 Source102:         nginx-logo.png
@@ -47,16 +44,16 @@ BuildRequires:     pcre-devel
 BuildRequires:     perl-devel
 BuildRequires:     perl(ExtUtils::Embed)
 BuildRequires:     zlib-devel
-BuildRequires:     systemd-units
+BuildRequires:     systemd
 Requires:          GeoIP
 Requires:          gd
 Requires:          openssl
 Requires:          pcre
 Requires:          perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 Requires(pre):     shadow-utils
-Requires(post):    chkconfig, systemd-units
-Requires(preun):   chkconfig, initscripts, systemd-units
-Requires(postun):  initscripts, systemd-units
+Requires(post):    systemd
+Requires(preun):   systemd
+Requires(postun):  systemd
 Provides:          webserver
 
 %description
@@ -68,7 +65,6 @@ memory usage.
 %prep
 %setup -q
 %patch0 -p0
-cp -a %{SOURCE8} .
 
 
 %build
@@ -138,8 +134,6 @@ install -p -d -m 0755 %{buildroot}%{nginx_webroot}
 
 install -p -m 0644 %{SOURCE3} \
     %{buildroot}%{nginx_confdir}
-install -p -m 0644 %{SOURCE4} %{SOURCE5} %{SOURCE6} \
-    %{buildroot}%{nginx_confdir}/conf.d
 install -p -m 0644 %{SOURCE100} \
     %{buildroot}%{nginx_webroot}
 install -p -m 0644 %{SOURCE101} %{SOURCE102} \
@@ -147,7 +141,11 @@ install -p -m 0644 %{SOURCE101} %{SOURCE102} \
 install -p -m 0644 %{SOURCE103} %{SOURCE104} \
     %{buildroot}%{nginx_webroot}
 
-install -p -D -m 0755 %{SOURCE7} %{buildroot}%{_bindir}/nginx-upgrade
+install -p -D -m 0644 %{_builddir}/nginx-%{version}/man/nginx.8 \
+    %{buildroot}%{_mandir}/man8/nginx.8
+
+install -p -D -m 0755 %{SOURCE4} %{buildroot}%{_bindir}/nginx-upgrade
+install -p -D -m 0644 %{SOURCE5} %{buildroot}%{_mandir}/man8/nginx-upgrade.8
 
 
 %pre
@@ -160,36 +158,22 @@ if [ $1 -eq 1 ]; then
 fi
 
 %post
-if [ $1 -eq 1 ]; then
-    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
-fi
-
-%triggerun -- nginx < 1:1.0.12-2
-if /sbin/chkconfig --level 3 nginx; then
-    /bin/systemctl enable nginx.service >/dev/null 2>&1 || :
-fi
-/sbin/chkconfig --del nginx >/dev/null 2>&1 || :
-/bin/systemctl try-restart nginx.service >/dev/null 2>&1 || :
+%systemd_post nginx.service
 
 %preun
-if [ $1 -eq 0 ]; then
-    /bin/systemctl --no-reload disable nginx.service >/dev/null 2>&1 || :
-    /bin/systemctl stop nginx.service >/dev/null 2>&1 || :
-fi
+%systemd_preun nginx.service
 
 %postun
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -gt 1 ]; then
-    /bin/systemctl try-restart nginx.service >/dev/null 2>&1 || :
-fi
-
+%systemd_postun nginx.service
 
 %files
-%doc LICENSE CHANGES README README.fedora
+%doc LICENSE CHANGES README
 %{nginx_datadir}/
 %{_bindir}/nginx-upgrade
 %{_sbindir}/nginx
-%{_mandir}/man3/nginx.3pm.gz
+%{_mandir}/man3/nginx.3pm*
+%{_mandir}/man8/nginx.8*
+%{_mandir}/man8/nginx-upgrade.8*
 %{_unitdir}/nginx.service
 %dir %{nginx_confdir}
 %dir %{nginx_confdir}/conf.d
@@ -209,7 +193,6 @@ fi
 %config(noreplace) %{nginx_confdir}/uwsgi_params
 %config(noreplace) %{nginx_confdir}/uwsgi_params.default
 %config(noreplace) %{nginx_confdir}/win-utf
-%config(noreplace) %{nginx_confdir}/conf.d/*.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/nginx
 %dir %{perl_vendorarch}/auto/nginx
 %{perl_vendorarch}/nginx.pm
@@ -219,7 +202,21 @@ fi
 
 
 %changelog
-* Fri Sep 21 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> - 1:1.2.3-1
+* Sun Oct 28 2012 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.2.4-1
+- update to upstream release 1.2.4
+- introduce new systemd-rpm macros (#850228)
+- link to official documentation not the community wiki (#870733)
+- do not run systemctl try-restart after package upgrade to allow the
+  administrator to run nginx-upgrade and avoid downtime
+- add nginx man page (#870738)
+- add nginx-upgrade man page and remove README.fedora
+- remove chkconfig from Requires(post/preun)
+- remove initscripts from Requires(preun/postun)
+- remove separate configuration files in "/etc/nginx/conf.d" directory
+  and revert to upstream default of a centralized nginx.conf file
+  (#803635) (#842738)
+
+* Fri Sep 21 2012 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.2.3-1
 - update to upstream release 1.2.3
 
 * Fri Jul 20 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:1.2.1-3
@@ -228,16 +225,16 @@ fi
 * Thu Jun 28 2012 Petr Pisar <ppisar@redhat.com> - 1:1.2.1-2
 - Perl 5.16 rebuild
 
-* Sun Jun 10 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> - 1:1.2.1-1
+* Sun Jun 10 2012 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.2.1-1
 - update to upstream release 1.2.1
 
 * Fri Jun 08 2012 Petr Pisar <ppisar@redhat.com> - 1:1.2.0-2
 - Perl 5.16 rebuild
 
-* Wed May 16 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> - 1:1.2.0-1
+* Wed May 16 2012 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.2.0-1
 - update to upstream release 1.2.0
 
-* Wed May 16 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> - 1:1.0.15-4
+* Wed May 16 2012 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.0.15-4
 - add nginx-upgrade to replace functionality from the nginx initscript
   that was lost after migration to systemd
 - add README.fedora to describe usage of nginx-upgrade
@@ -248,32 +245,32 @@ fi
   advice from nginx-devel
 - nginx.service: use private /tmp
 
-* Mon May 14 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> - 1:1.0.15-3
+* Mon May 14 2012 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.0.15-3
 - fix incorrect postrotate script in nginx.logrotate
 
-* Thu Apr 19 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> - 1:1.0.15-2
+* Thu Apr 19 2012 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.0.15-2
 - renable auto-cc-gcc patch due to warnings on rawhide
 
-* Sat Apr 14 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> - 1:1.0.15-1
+* Sat Apr 14 2012 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.0.15-1
 - update to upstream release 1.0.15
 - no need to apply auto-cc-gcc patch
 - add %%global _hardened_build 1
 
-* Thu Mar 15 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> - 1:1.0.14-1
+* Thu Mar 15 2012 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.0.14-1
 - update to upstream release 1.0.14
 - amend some %%changelog formatting
 
-* Tue Mar 06 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> - 1:1.0.13-1
+* Tue Mar 06 2012 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.0.13-1
 - update to upstream release 1.0.13
 - amend --pid-path and --log-path
 
-* Sun Mar 04 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> - 1:1.0.12-5
+* Sun Mar 04 2012 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.0.12-5
 - change pid path in nginx.conf to match systemd service file
 
-* Sun Mar 04 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> - 1:1.0.12-3
+* Sun Mar 04 2012 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.0.12-3
 - fix %%pre scriptlet
 
-* Mon Feb 20 2012 Jamie Nguyen <jamie@tomoyolinux.co.uk> - 1:1.0.12-2
+* Mon Feb 20 2012 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.0.12-2
 - update upstream URL
 - replace %%define with %%global
 - remove obsolete BuildRoot tag, %%clean section and %%defattr
