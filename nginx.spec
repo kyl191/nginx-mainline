@@ -11,7 +11,7 @@
 Name:              nginx
 Epoch:             1
 Version:           1.2.6
-Release:           1%{?dist}
+Release:           2%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -202,6 +202,11 @@ fi
 
 
 %changelog
+* Tue Dec 18 2012 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.2.6-2
+- send correct kill signal and use correct file permissions when rotating
+  log files (#888225)
+- send correct kill signal in nginx-upgrade
+
 * Tue Dec 11 2012 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.2.6-1
 - update to upstream release 1.2.6
 
