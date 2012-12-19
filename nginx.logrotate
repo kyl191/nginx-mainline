@@ -1,5 +1,5 @@
 /var/log/nginx/*log {
-    create 0644 root nginx
+    create 0644 nginx nginx
     daily
     rotate 10
     missingok
