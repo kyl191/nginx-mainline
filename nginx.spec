@@ -11,7 +11,7 @@
 Name:              nginx
 Epoch:             1
 Version:           1.2.6
-Release:           3%{?dist}
+Release:           4%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -111,7 +111,7 @@ export DESTDIR=%{buildroot}
     --with-cc-opt="%{optflags} $(pcre-config --cflags)" \
     --with-ld-opt="$RPM_LD_FLAGS -Wl,-E" # so the perl module finds its symbols
 
-make %{?_smp_mflags} 
+make %{?_smp_mflags}
 
 
 %install
@@ -202,6 +202,10 @@ fi
 
 
 %changelog
+* Wed Jan 23 2013 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.2.6-4
+- add comment in nginx.conf regarding "include /etc/nginf/conf.d/*.conf"
+  (#903065)
+
 * Wed Dec 19 2012 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.2.6-3
 - use correct file ownership when rotating log files
 
