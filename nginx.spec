@@ -11,7 +11,7 @@
 Name:              nginx
 Epoch:             1
 Version:           1.2.6
-Release:           4%{?dist}
+Release:           5%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -202,6 +202,10 @@ fi
 
 
 %changelog
+* Wed Jan 23 2013 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.2.6-5
+- uncomment "include /etc/nginx/conf.d/*.conf by default but leave the
+  conf.d directory empty (#903065)
+
 * Wed Jan 23 2013 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.2.6-4
 - add comment in nginx.conf regarding "include /etc/nginf/conf.d/*.conf"
   (#903065)
