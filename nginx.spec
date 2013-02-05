@@ -11,7 +11,7 @@
 Name:              nginx
 Epoch:             1
 Version:           1.2.6
-Release:           5%{?dist}
+Release:           6%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -202,6 +202,10 @@ fi
 
 
 %changelog
+* Tue Feb 05 2013 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.2.6-6
+- use 'kill' instead of 'systemctl' when rotating log files to workaround
+  SELinux issue (#889151)
+
 * Wed Jan 23 2013 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.2.6-5
 - uncomment "include /etc/nginx/conf.d/*.conf by default but leave the
   conf.d directory empty (#903065)

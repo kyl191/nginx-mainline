@@ -7,7 +7,7 @@
     compress
     sharedscripts
     postrotate
-        /bin/systemctl kill --signal=SIGUSR1 nginx.service
+        /bin/kill -USR1 `cat /run/nginx.pid 2>/dev/null` 2>/dev/null || true
     endscript
 }
 
