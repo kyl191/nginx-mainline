@@ -10,8 +10,8 @@
 
 Name:              nginx
 Epoch:             1
-Version:           1.2.6
-Release:           6%{?dist}
+Version:           1.2.7
+Release:           1%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -21,11 +21,12 @@ License:           BSD
 URL:               http://nginx.org/
 
 Source0:           http://nginx.org/download/nginx-%{version}.tar.gz
-Source1:           nginx.service
-Source2:           nginx.logrotate
-Source3:           nginx.conf
-Source4:           nginx-upgrade
-Source5:           nginx-upgrade.8
+Source1:           http://nginx.org/download/nginx-%{version}.tar.gz.asc
+Source10:          nginx.service
+Source11:          nginx.logrotate
+Source12:          nginx.conf
+Source13:          nginx-upgrade
+Source14:          nginx-upgrade.8
 Source100:         index.html
 Source101:         poweredby.png
 Source102:         nginx-logo.png
@@ -122,9 +123,9 @@ find %{buildroot} -type f -name perllocal.pod -exec rm -f '{}' \;
 find %{buildroot} -type f -empty -exec rm -f '{}' \;
 find %{buildroot} -type f -iname '*.so' -exec chmod 0755 '{}' \;
 
-install -p -D -m 0644 %{SOURCE1} \
+install -p -D -m 0644 %{SOURCE10} \
     %{buildroot}%{_unitdir}/nginx.service
-install -p -D -m 0644 %{SOURCE2} \
+install -p -D -m 0644 %{SOURCE11} \
     %{buildroot}%{_sysconfdir}/logrotate.d/nginx
 
 install -p -d -m 0755 %{buildroot}%{nginx_confdir}/conf.d
@@ -132,7 +133,7 @@ install -p -d -m 0755 %{buildroot}%{nginx_home_tmp}
 install -p -d -m 0755 %{buildroot}%{nginx_logdir}
 install -p -d -m 0755 %{buildroot}%{nginx_webroot}
 
-install -p -m 0644 %{SOURCE3} \
+install -p -m 0644 %{SOURCE12} \
     %{buildroot}%{nginx_confdir}
 install -p -m 0644 %{SOURCE100} \
     %{buildroot}%{nginx_webroot}
@@ -144,8 +145,8 @@ install -p -m 0644 %{SOURCE103} %{SOURCE104} \
 install -p -D -m 0644 %{_builddir}/nginx-%{version}/man/nginx.8 \
     %{buildroot}%{_mandir}/man8/nginx.8
 
-install -p -D -m 0755 %{SOURCE4} %{buildroot}%{_bindir}/nginx-upgrade
-install -p -D -m 0644 %{SOURCE5} %{buildroot}%{_mandir}/man8/nginx-upgrade.8
+install -p -D -m 0755 %{SOURCE13} %{buildroot}%{_bindir}/nginx-upgrade
+install -p -D -m 0644 %{SOURCE14} %{buildroot}%{_mandir}/man8/nginx-upgrade.8
 
 
 %pre
@@ -202,6 +203,10 @@ fi
 
 
 %changelog
+* Sat Feb 16 2013 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.2.7-1
+- update to upstream release 1.2.7
+- add .asc file
+
 * Tue Feb 05 2013 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.2.6-6
 - use 'kill' instead of 'systemctl' when rotating log files to workaround
   SELinux issue (#889151)
