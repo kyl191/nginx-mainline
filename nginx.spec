@@ -10,8 +10,8 @@
 
 Name:              nginx
 Epoch:             1
-Version:           1.2.7
-Release:           2%{?dist}
+Version:           1.2.8
+Release:           1%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -210,6 +210,9 @@ fi
 
 
 %changelog
+* Tue Apr 02 2013 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.2.8-1
+- update to upstream release 1.2.8
+
 * Fri Feb 22 2013 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.2.7-2
 - make sure nginx directories are not world readable (#913724, #913735)
 
