@@ -8,10 +8,16 @@
 %global  nginx_logdir        %{_localstatedir}/log/nginx
 %global  nginx_webroot       %{nginx_datadir}/html
 
+# gperftools exist only on selected arches
+%ifarch %{ix86} x86_64 ppc ppc64 %{arm}
+%global  with_gperftools     1
+%endif
+
+
 Name:              nginx
 Epoch:             1
 Version:           1.4.0
-Release:           1%{?dist}
+Release:           2%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -39,7 +45,9 @@ Patch0:            nginx-auto-cc-gcc.patch
 
 BuildRequires:     GeoIP-devel
 BuildRequires:     gd-devel
+%if 0%{?with_gperftools}
 BuildRequires:     gperftools-devel
+%endif
 BuildRequires:     libxslt-devel
 BuildRequires:     openssl-devel
 BuildRequires:     pcre-devel
@@ -113,7 +121,9 @@ export DESTDIR=%{buildroot}
     --with-mail \
     --with-mail_ssl_module \
     --with-pcre \
+%if 0%{?with_gperftools}
     --with-google_perftools_module \
+%endif
     --with-debug \
     --with-cc-opt="%{optflags} $(pcre-config --cflags)" \
     --with-ld-opt="$RPM_LD_FLAGS -Wl,-E" # so the perl module finds its symbols
@@ -214,6 +224,9 @@ fi
 
 
 %changelog
+* Sun Apr 28 2013 Dan Horák <dan[at]danny.cz> - 1:1.4.0-2
+- gperftools exist only on selected arches
+
 * Fri Apr 26 2013 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.4.0-1
 - update to upstream release 1.4.0
 - enable SPDY module (new in this version)
