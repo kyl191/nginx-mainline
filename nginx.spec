@@ -16,8 +16,8 @@
 
 Name:              nginx
 Epoch:             1
-Version:           1.4.0
-Release:           2%{?dist}
+Version:           1.4.1
+Release:           1%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -224,6 +224,11 @@ fi
 
 
 %changelog
+* Tue May 07 2013 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.4.1-1
+- update to upstream release 1.4.1 (#960605, #960606):
+  CVE-2013-2028 stack-based buffer overflow when handling certain chunked
+  transfer encoding requests
+
 * Sun Apr 28 2013 Dan Horák <dan[at]danny.cz> - 1:1.4.0-2
 - gperftools exist only on selected arches
 
