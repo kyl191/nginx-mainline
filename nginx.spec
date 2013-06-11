@@ -17,7 +17,7 @@
 Name:              nginx
 Epoch:             1
 Version:           1.4.1
-Release:           1%{?dist}
+Release:           2%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -224,6 +224,9 @@ fi
 
 
 %changelog
+* Tue Jun 11 2013 Remi Collet <rcollet@redhat.com> - 1:1.4.1-2
+- rebuild for new GD 2.1.0
+
 * Tue May 07 2013 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.4.1-1
 - update to upstream release 1.4.1 (#960605, #960606):
   CVE-2013-2028 stack-based buffer overflow when handling certain chunked
