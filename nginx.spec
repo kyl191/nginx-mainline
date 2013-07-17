@@ -17,7 +17,7 @@
 Name:              nginx
 Epoch:             1
 Version:           1.4.1
-Release:           2%{?dist}
+Release:           3%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -224,6 +224,9 @@ fi
 
 
 %changelog
+* Wed Jul 17 2013 Petr Pisar <ppisar@redhat.com> - 1:1.4.1-3
+- Perl 5.18 rebuild
+
 * Tue Jun 11 2013 Remi Collet <rcollet@redhat.com> - 1:1.4.1-2
 - rebuild for new GD 2.1.0
 
