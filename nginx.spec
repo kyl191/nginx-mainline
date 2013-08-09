@@ -17,7 +17,7 @@
 Name:              nginx
 Epoch:             1
 Version:           1.4.2
-Release:           2%{?dist}
+Release:           3%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -33,6 +33,8 @@ Source11:          nginx.logrotate
 Source12:          nginx.conf
 Source13:          nginx-upgrade
 Source14:          nginx-upgrade.8
+Source15:          nginx.init
+Source16:          nginx.sysconfig
 Source100:         index.html
 Source101:         poweredby.png
 Source102:         nginx-logo.png
@@ -54,17 +56,24 @@ BuildRequires:     pcre-devel
 BuildRequires:     perl-devel
 BuildRequires:     perl(ExtUtils::Embed)
 BuildRequires:     zlib-devel
-BuildRequires:     systemd
 Requires:          GeoIP
 Requires:          gd
 Requires:          openssl
 Requires:          pcre
 Requires:          perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 Requires(pre):     shadow-utils
+Provides:          webserver
+
+%if 0%{?fedora} >= 16
+BuildRequires:     systemd
 Requires(post):    systemd
 Requires(preun):   systemd
 Requires(postun):  systemd
-Provides:          webserver
+%else
+Requires(post):    chkconfig
+Requires(preun):   chkconfig, initscripts
+Requires(postun):  initscripts
+%endif
 
 %description
 Nginx is a web server and a reverse proxy server for HTTP, SMTP, POP3 and
@@ -94,8 +103,13 @@ export DESTDIR=%{buildroot}
     --http-fastcgi-temp-path=%{nginx_home_tmp}/fastcgi \
     --http-uwsgi-temp-path=%{nginx_home_tmp}/uwsgi \
     --http-scgi-temp-path=%{nginx_home_tmp}/scgi \
+%if 0%{?fedora} >= 16
     --pid-path=/run/nginx.pid \
     --lock-path=/run/lock/subsys/nginx \
+%else
+    --pid-path=%{_localstatedir}/run/nginx.pid \
+    --lock-path=%{_localstatedir}/lock/subsys/nginx \
+%endif
     --user=%{nginx_user} \
     --group=%{nginx_group} \
     --with-file-aio \
@@ -138,9 +152,16 @@ find %{buildroot} -type f -name .packlist -exec rm -f '{}' \;
 find %{buildroot} -type f -name perllocal.pod -exec rm -f '{}' \;
 find %{buildroot} -type f -empty -exec rm -f '{}' \;
 find %{buildroot} -type f -iname '*.so' -exec chmod 0755 '{}' \;
-
+%if 0%{?fedora} >= 16
 install -p -D -m 0644 %{SOURCE10} \
     %{buildroot}%{_unitdir}/nginx.service
+%else
+install -p -D -m 0755 %{SOURCE15} \
+    %{buildroot}%{_initrddir}/nginx
+install -p -D -m 0644 %{SOURCE16} \
+    %{buildroot}%{_sysconfdir}/sysconfig/nginx
+%endif
+
 install -p -D -m 0644 %{SOURCE11} \
     %{buildroot}%{_sysconfdir}/logrotate.d/nginx
 
@@ -174,7 +195,13 @@ getent passwd %{nginx_user} > /dev/null || \
 exit 0
 
 %post
+%if 0%{?fedora} >= 16
 %systemd_post nginx.service
+%else
+if [ $1 -eq 1 ]; then
+    /sbin/chkconfig --add %{name}
+fi
+%endif
 if [ $1 -eq 2 ]; then
     # Make sure these directories are not world readable.
     chmod 700 %{nginx_home}
@@ -183,10 +210,23 @@ if [ $1 -eq 2 ]; then
 fi
 
 %preun
+%if 0%{?fedora} >= 16
 %systemd_preun nginx.service
+%else
+if [ $1 -eq 0 ]; then
+    /sbin/service %{name} stop >/dev/null 2>&1
+    /sbin/chkconfig --del %{name}
+fi
+%endif
 
 %postun
+%if 0%{?fedora} >= 16
 %systemd_postun nginx.service
+%else
+if [ $1 -eq 2 ]; then
+    /sbin/service %{name} upgrade || :
+fi
+%endif
 
 %files
 %doc LICENSE CHANGES README
@@ -196,7 +236,12 @@ fi
 %{_mandir}/man3/nginx.3pm*
 %{_mandir}/man8/nginx.8*
 %{_mandir}/man8/nginx-upgrade.8*
+%if 0%{?fedora} >= 16
 %{_unitdir}/nginx.service
+%else
+%{_initrddir}/nginx
+%config(noreplace) %{_sysconfdir}/sysconfig/nginx
+%endif
 %dir %{nginx_confdir}
 %dir %{nginx_confdir}/conf.d
 %config(noreplace) %{nginx_confdir}/fastcgi.conf
@@ -224,6 +269,9 @@ fi
 
 
 %changelog
+* Fri Aug 09 2013 Jonathan Steffan <jsteffan@fedoraproject.org> - 1:1.4.2-3
+- Add in conditionals to build for non-systemd targets
+
 * Sat Aug 03 2013 Petr Pisar <ppisar@redhat.com> - 1:1.4.2-2
 - Perl 5.18 rebuild
 
