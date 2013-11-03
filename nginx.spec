@@ -13,11 +13,10 @@
 %global  with_gperftools     1
 %endif
 
-
 Name:              nginx
 Epoch:             1
-Version:           1.4.2
-Release:           3%{?dist}
+Version:           1.4.3
+Release:           1%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -269,6 +268,9 @@ fi
 
 
 %changelog
+* Sun Nov 03 2013 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.4.3-1
+- update to upstream release 1.4.3
+
 * Fri Aug 09 2013 Jonathan Steffan <jsteffan@fedoraproject.org> - 1:1.4.2-3
 - Add in conditionals to build for non-systemd targets
 
