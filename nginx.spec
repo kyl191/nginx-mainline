@@ -15,7 +15,7 @@
 
 Name:              nginx
 Epoch:             1
-Version:           1.4.3
+Version:           1.4.4
 Release:           1%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
@@ -268,6 +268,10 @@ fi
 
 
 %changelog
+* Wed Nov 20 2013 Peter Borsa <peter.borsa@gmail.com> - 1:1.4.4-1
+- Update to upstream release 1.4.4
+- Security fix BZ 1032267
+
 * Sun Nov 03 2013 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.4.3-1
 - update to upstream release 1.4.3
 
