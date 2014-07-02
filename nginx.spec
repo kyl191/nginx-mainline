@@ -13,10 +13,15 @@
 %global  with_gperftools     1
 %endif
 
+# AIO missing on some arches
+%ifnarch aarch64
+%global  with_aio   1
+%endif
+
 Name:              nginx
 Epoch:             1
 Version:           1.6.0
-Release:           2%{?dist}
+Release:           3%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -111,7 +116,9 @@ export DESTDIR=%{buildroot}
 %endif
     --user=%{nginx_user} \
     --group=%{nginx_group} \
+%if 0%{?with_aio}
     --with-file-aio \
+%endif
     --with-ipv6 \
     --with-http_ssl_module \
     --with-http_spdy_module \
@@ -268,6 +275,9 @@ fi
 
 
 %changelog
+* Wed Jul 02 2014 Yaakov Selkowitz <yselkowi@redhat.com> - 1:1.6.0-3
+- Fix FTBFS on aarch64 (#1115559)
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:1.6.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
