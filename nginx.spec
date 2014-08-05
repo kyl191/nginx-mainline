@@ -20,8 +20,8 @@
 
 Name:              nginx
 Epoch:             1
-Version:           1.6.0
-Release:           3%{?dist}
+Version:           1.6.1
+Release:           1%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -275,6 +275,10 @@ fi
 
 
 %changelog
+* Tue Aug 05 2014 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.6.1-1
+- update to upstream release 1.6.1
+- (#1126891) CVE-2014-3556: SMTP STARTTLS plaintext injection flaw
+
 * Wed Jul 02 2014 Yaakov Selkowitz <yselkowi@redhat.com> - 1:1.6.0-3
 - Fix FTBFS on aarch64 (#1115559)
 
