@@ -27,7 +27,7 @@
 Name:              nginx
 Epoch:             1
 Version:           1.6.1
-Release:           3%{?dist}
+Release:           4%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -281,6 +281,9 @@ fi
 
 
 %changelog
+* Wed Aug 27 2014 Jitka Plesnikova <jplesnik@redhat.com> - 1:1.6.1-4
+- Perl 5.20 rebuild
+
 * Sun Aug 17 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:1.6.1-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
