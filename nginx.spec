@@ -26,8 +26,8 @@
 
 Name:              nginx
 Epoch:             1
-Version:           1.6.1
-Release:           4%{?dist}
+Version:           1.6.2
+Release:           1%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -281,6 +281,10 @@ fi
 
 
 %changelog
+* Wed Sep 17 2014 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.6.2-1
+- update to upstream release 1.6.2
+- CVE-2014-3616 nginx: virtual host confusion (#1142573)
+
 * Wed Aug 27 2014 Jitka Plesnikova <jplesnik@redhat.com> - 1:1.6.1-4
 - Perl 5.20 rebuild
 
