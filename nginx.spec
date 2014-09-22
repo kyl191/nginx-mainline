@@ -27,7 +27,7 @@
 Name:              nginx
 Epoch:             1
 Version:           1.6.2
-Release:           1%{?dist}
+Release:           2%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -66,12 +66,14 @@ BuildRequires:     pcre-devel
 BuildRequires:     perl-devel
 BuildRequires:     perl(ExtUtils::Embed)
 BuildRequires:     zlib-devel
+
+Requires:          nginx-filesystem = %{epoch}:%{version}-%{release}
 Requires:          GeoIP
 Requires:          gd
 Requires:          openssl
 Requires:          pcre
 Requires:          perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
-Requires(pre):     shadow-utils
+Requires(pre):     nginx-filesystem
 Provides:          webserver
 
 %if 0%{?with_systemd}
@@ -89,6 +91,17 @@ Requires(postun):  initscripts
 Nginx is a web server and a reverse proxy server for HTTP, SMTP, POP3 and
 IMAP protocols, with a strong focus on high concurrency, performance and low
 memory usage.
+
+%package filesystem
+Group:             System Environment/Daemons
+Summary:           The basic directory layout for the Nginx server
+BuildArch:         noarch
+Requires(pre):     shadow-utils
+
+%description filesystem
+The nginx-filesystem package contains the basic directory layout
+for the Nginx server including the correct permissions for the
+directories.
 
 
 %prep
@@ -199,7 +212,7 @@ install -p -D -m 0755 %{SOURCE13} %{buildroot}%{_bindir}/nginx-upgrade
 install -p -D -m 0644 %{SOURCE14} %{buildroot}%{_mandir}/man8/nginx-upgrade.8
 
 
-%pre
+%pre filesystem
 getent group %{nginx_group} > /dev/null || groupadd -r %{nginx_group}
 getent passwd %{nginx_user} > /dev/null || \
     useradd -r -d %{nginx_home} -g %{nginx_group} \
@@ -242,7 +255,7 @@ fi
 
 %files
 %doc LICENSE CHANGES README
-%{nginx_datadir}/
+%{nginx_datadir}/html/*
 %{_bindir}/nginx-upgrade
 %{_sbindir}/nginx
 %{_mandir}/man3/nginx.3pm*
@@ -279,8 +292,17 @@ fi
 %attr(700,%{nginx_user},%{nginx_group}) %dir %{nginx_home_tmp}
 %attr(700,%{nginx_user},%{nginx_group}) %dir %{nginx_logdir}
 
+%files filesystem
+%dir %{nginx_datadir}
+%dir %{nginx_datadir}/html
+%dir %{nginx_confdir}
+%dir %{nginx_confdir}/conf.d
+
 
 %changelog
+* Mon Sep 22 2014 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.6.2-2
+- create nginx-filesystem subpackage (patch from Remi Collet)
+
 * Wed Sep 17 2014 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.6.2-1
 - update to upstream release 1.6.2
 - CVE-2014-3616 nginx: virtual host confusion (#1142573)
