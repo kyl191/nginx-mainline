@@ -27,7 +27,7 @@
 Name:              nginx
 Epoch:             1
 Version:           1.6.2
-Release:           3%{?dist}
+Release:           4%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -276,8 +276,6 @@ fi
 %{_initrddir}/nginx
 %config(noreplace) %{_sysconfdir}/sysconfig/nginx
 %endif
-%dir %{nginx_confdir}
-%dir %{nginx_confdir}/conf.d
 %config(noreplace) %{nginx_confdir}/fastcgi.conf
 %config(noreplace) %{nginx_confdir}/fastcgi.conf.default
 %config(noreplace) %{nginx_confdir}/fastcgi_params
@@ -310,6 +308,9 @@ fi
 
 
 %changelog
+* Wed Oct 22 2014 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.6.2-4
+- fix package ownership of directories
+
 * Wed Oct 22 2014 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.6.2-3
 - add vim files (#1142849)
 
