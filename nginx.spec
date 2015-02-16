@@ -24,9 +24,9 @@
 %global with_systemd 0
 %endif
 
-Name:              nginx
+Name:              nginx-mainline
 Epoch:             1
-Version:           1.6.2
+Version:           1.7.10
 Release:           4%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
@@ -67,14 +67,16 @@ BuildRequires:     perl-devel
 BuildRequires:     perl(ExtUtils::Embed)
 BuildRequires:     zlib-devel
 
-Requires:          nginx-filesystem = %{epoch}:%{version}-%{release}
+Requires:          nginx-mainline-filesystem = %{epoch}:%{version}-%{release}
 Requires:          GeoIP
 Requires:          gd
 Requires:          openssl
 Requires:          pcre
 Requires:          perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
-Requires(pre):     nginx-filesystem
+Requires(pre):     nginx-mainline-filesystem
 Provides:          webserver
+Provides:          nginx = 1:%{version}-%{release}
+Obsoletes:         nginx < 1:1.7.0
 
 %if 0%{?with_systemd}
 BuildRequires:     systemd
@@ -90,22 +92,26 @@ Requires(postun):  initscripts
 %description
 Nginx is a web server and a reverse proxy server for HTTP, SMTP, POP3 and
 IMAP protocols, with a strong focus on high concurrency, performance and low
-memory usage.
+memory usage. This installs the mainline version of nginx.
 
 %package filesystem
 Group:             System Environment/Daemons
 Summary:           The basic directory layout for the Nginx server
 BuildArch:         noarch
 Requires(pre):     shadow-utils
+Provides:          nginx-mainline = 1:%{version}-%{release}
+Obsoletes:         nginx-mainline < 1:1.7.0
 
 %description filesystem
 The nginx-filesystem package contains the basic directory layout
 for the Nginx server including the correct permissions for the
-directories.
+directories. This installs the mainline version of nginx.
 
 
 %prep
-%setup -q
+%setup -n nginx-mainline -c
+mv nginx-%{version}/* .
+rmdir nginx-%{version}
 %patch0 -p0
 
 
@@ -206,7 +212,7 @@ install -p -m 0644 %{SOURCE101} %{SOURCE102} \
 install -p -m 0644 %{SOURCE103} %{SOURCE104} \
     %{buildroot}%{nginx_webroot}
 
-install -p -D -m 0644 %{_builddir}/nginx-%{version}/man/nginx.8 \
+install -p -D -m 0644 %{_builddir}/nginx-mainline/man/nginx.8 \
     %{buildroot}%{_mandir}/man8/nginx.8
 
 install -p -D -m 0755 %{SOURCE13} %{buildroot}%{_bindir}/nginx-upgrade
@@ -308,6 +314,15 @@ fi
 
 
 %changelog
+* Fri Feb 13 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.7.10-4
+- Add provide & obsoletes definitions to nginx-mainline-filesystem
+
+* Fri Feb 13 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.7.10-3
+- Update requires to use nginx-mainline-filesystem
+
+* Fri Feb 13 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.7.10-2
+- Fix requires error
+
 * Wed Oct 22 2014 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.6.2-4
 - fix package ownership of directories
 
