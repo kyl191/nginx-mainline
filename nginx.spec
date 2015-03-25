@@ -26,8 +26,8 @@
 
 Name:              nginx-mainline
 Epoch:             1
-Version:           1.7.10
-Release:           4%{?dist}
+Version:           1.7.11
+Release:           2%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -314,6 +314,17 @@ fi
 
 
 %changelog
+* Tue Mar 24 2015 Jenkins CI <http://fr.lightweavr.net:15502/job/nginx-mainline/> - 1:1.7.11-2
+- Building version 1.7.11
+  (http://fr.lightweavr.net:15502/job/nginx-mainline/18/)
+
+* Tue Mar 24 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.7.11-1
+- Update to upstream 1.7.11
+
+* Sun Mar 15 2015 Jenkins CI <http://fr.lightweavr.net:15502/job/nginx-mainline/> - 1:1.7.10-5
+- Building version 1.7.10
+  (http://fr.lightweavr.net:15502/job/nginx-mainline/13/)
+
 * Fri Feb 13 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.7.10-4
 - Add provide & obsoletes definitions to nginx-mainline-filesystem
 
