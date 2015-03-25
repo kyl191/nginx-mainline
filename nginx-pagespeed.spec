@@ -30,7 +30,7 @@
 
 Name:              nginx-pagespeed
 Epoch:             1
-Version:           %{ngx_version}-%{nps_version}
+Version:           %{ngx_version}
 Release:           1%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
@@ -323,7 +323,7 @@ fi
 
 %changelog
 
-* Wed Mar 25 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.7.11-1.9.32.3-1
+* Wed Mar 25 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.7.11-2
 - Building nginx 1.7.11 with ngx_pagespeed 1.9.32.3
 
 * Tue Mar 24 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.7.11-1
