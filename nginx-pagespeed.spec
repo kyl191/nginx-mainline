@@ -181,7 +181,7 @@ export DESTDIR=%{buildroot}
     --with-debug \
     --with-cc-opt="%{optflags} $(pcre-config --cflags)" \
     --with-ld-opt="$RPM_LD_FLAGS -Wl,-E" # so the perl module finds its symbols\
-    --add-module=$RPM_BUILD_DIR/ngx_pagespeed-release-%{nps_version}-beta
+    --add-module=$RPM_BUILD_DIR/$RPM_PACKAGE_NAME/ngx_pagespeed-release-%{nps_version}-beta
 
 make %{?_smp_mflags}
 
