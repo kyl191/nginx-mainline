@@ -180,7 +180,7 @@ export DESTDIR=%{buildroot}
 %endif
     --with-debug \
     --add-module=ngx_pagespeed-release-%{nps_version}-beta \
-    --with-cc-opt="%{optflags} $(pcre-config --cflags)" \
+    --with-cc-opt="%{optflags} $(pcre-config --cflags) -D_GLIBCXX_USE_CXX11_ABI=0" \
     --with-ld-opt="$RPM_LD_FLAGS -Wl,-E" # so the perl module finds its symbols
 
 
