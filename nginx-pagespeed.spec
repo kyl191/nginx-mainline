@@ -31,7 +31,7 @@
 Name:              nginx-pagespeed
 Epoch:             1
 Version:           %{ngx_version}
-Release:           1%{?dist}
+Release:           3%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -325,6 +325,9 @@ fi
 
 
 %changelog
+
+* Thu Mar 26 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.7.11-3
+- Add GCC option to configure to fix ngx_pagespeed compilation errors on Rawhide
 
 * Wed Mar 25 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.7.11-2
 - Building nginx 1.7.11 with ngx_pagespeed 1.9.32.3
