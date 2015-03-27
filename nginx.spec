@@ -112,7 +112,6 @@ directories. This installs the mainline version of nginx.
 %setup -n nginx-mainline -c
 mv nginx-%{version}/* .
 rmdir nginx-%{version}
-%patch0 -p0
 
 
 %build
