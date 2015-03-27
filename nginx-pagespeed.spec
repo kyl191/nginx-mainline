@@ -80,6 +80,7 @@ Requires(pre):     nginx-pagespeed-filesystem
 Provides:          webserver
 Provides:          nginx = 1:%{version}-%{release}
 Obsoletes:         nginx < 1:1.7.0
+Conflicts:         nginx >= 1:1.7.0
 
 %if 0%{?with_systemd}
 BuildRequires:     systemd
@@ -102,8 +103,7 @@ Group:             System Environment/Daemons
 Summary:           The basic directory layout for the Nginx server
 BuildArch:         noarch
 Requires(pre):     shadow-utils
-Provides:          nginx-pagespeed = 1:%{version}-%{release}
-Obsoletes:         nginx-pagespeed < 1:1.7.0
+Provides:          nginx-filesystem
 
 %description filesystem
 The nginx-filesystem package contains the basic directory layout
