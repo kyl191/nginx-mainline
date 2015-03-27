@@ -95,8 +95,7 @@ Group:             System Environment/Daemons
 Summary:           The basic directory layout for the Nginx server
 BuildArch:         noarch
 Requires(pre):     shadow-utils
-Provides:          nginx-mainline = 1:%{version}-%{release}
-Obsoletes:         nginx-mainline < 1:1.7.0
+Provides:          nginx-filesystem
 
 %description filesystem
 The nginx-filesystem package contains the basic directory layout
