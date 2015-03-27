@@ -245,7 +245,7 @@ fi
 %systemd_preun nginx.service
 %else
 if [ $1 -eq 0 ]; then
-    /sbin/service %{name} stop >/dev/null 2>&1
+    /sbin/service nginx stop >/dev/null 2>&1
     /sbin/chkconfig --del nginx
 fi
 %endif
