@@ -58,10 +58,6 @@ Source102:         nginx-logo.png
 Source103:         404.html
 Source104:         50x.html
 
-# removes -Werror in upstream build scripts.  -Werror conflicts with
-# -D_FORTIFY_SOURCE=2 causing warnings to turn into errors.
-Patch0:            nginx-auto-cc-gcc.patch
-
 BuildRequires:     GeoIP-devel
 BuildRequires:     gd-devel
 %if 0%{?with_gperftools}
@@ -119,7 +115,6 @@ directories. This installs the mainline version of nginx.
 %setup -n nginx-pagespeed -c
 mv nginx-%{ngx_version}/* .
 rmdir nginx-%{ngx_version}
-%patch0 -p0
 %setup -n nginx-pagespeed -T -D -a 2
 %setup -n nginx-pagespeed -T -D -a 3
 mv psol ngx_pagespeed-release-%{nps_version}-beta/
