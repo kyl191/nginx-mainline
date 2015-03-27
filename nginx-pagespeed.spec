@@ -7,6 +7,7 @@
 %global  nginx_datadir       %{_datadir}/nginx
 %global  nginx_logdir        %{_localstatedir}/log/nginx
 %global  nginx_webroot       %{nginx_datadir}/html
+%global  pagespeed_cachedir  %{_localstatedir}/cache/ngx_pagespeed
 
 
 %define ngx_version 1.7.11
@@ -213,6 +214,7 @@ install -p -d -m 0700 %{buildroot}%{nginx_home}
 install -p -d -m 0700 %{buildroot}%{nginx_home_tmp}
 install -p -d -m 0700 %{buildroot}%{nginx_logdir}
 install -p -d -m 0755 %{buildroot}%{nginx_webroot}
+install -p -d -m 0755 %{buildroot}%{pagespeed_cachedir}
 
 install -p -m 0644 %{SOURCE12} \
     %{buildroot}%{nginx_confdir}
