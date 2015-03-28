@@ -112,11 +112,11 @@ directories. This installs the mainline version of nginx.
 
 
 %prep
-%setup -n nginx-pagespeed -c
+%setup -n nginx-pagespeed -c -q
 mv nginx-%{ngx_version}/* .
 rmdir nginx-%{ngx_version}
-%setup -n nginx-pagespeed -T -D -a 2
-%setup -n nginx-pagespeed -T -D -a 3
+%setup -n nginx-pagespeed -T -D -a 2 -q
+%setup -n nginx-pagespeed -T -D -a 3 -q
 mv psol ngx_pagespeed-release-%{nps_version}-beta/
 
 
