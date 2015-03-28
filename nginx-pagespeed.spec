@@ -257,7 +257,8 @@ if [ $1 -eq 2 ]; then
     chmod 700 %{nginx_home_tmp}
     chmod 700 %{nginx_logdir}
 fi
-semodule -i %{Source18}
+semodule -i %{Source18} 2>/dev/null || :
+
 
 %preun
 %if 0%{?with_systemd}
@@ -268,7 +269,7 @@ if [ $1 -eq 0 ]; then
     /sbin/chkconfig --del nginx
 fi
 %endif
-semodule -r ngx_pagespeed
+semodule -r ngx_pagespeed 2>/dev/null || :
 
 %postun
 %if 0%{?with_systemd}
