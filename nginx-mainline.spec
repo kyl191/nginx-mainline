@@ -71,7 +71,6 @@ Requires:          pcre
 Requires:          perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 Requires(pre):     nginx-mainline-filesystem
 Provides:          webserver
-Provides:          nginx = 1:%{version}-%{release}
 Obsoletes:         nginx < 1:1.7.0
 Conflicts:         nginx >= 1:1.7.0
 
