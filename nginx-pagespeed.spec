@@ -52,6 +52,7 @@ Source13:          nginx-upgrade
 Source14:          nginx-upgrade.8
 Source15:          nginx.init
 Source16:          nginx.sysconfig
+Source17:          pagespeed.conf
 Source100:         index.html
 Source101:         poweredby.png
 Source102:         nginx-logo.png
@@ -213,6 +214,8 @@ install -p -d -m 0755 %{buildroot}%{pagespeed_cachedir}
 
 install -p -m 0644 %{SOURCE12} \
     %{buildroot}%{nginx_confdir}
+install -p -m 0644 %{SOURCE17} \
+    %{buildroot}%{nginx_confdir}/default.d
 install -p -m 0644 %{SOURCE100} \
     %{buildroot}%{nginx_webroot}
 install -p -m 0644 %{SOURCE101} %{SOURCE102} \
@@ -305,6 +308,7 @@ fi
 %config(noreplace) %{nginx_confdir}/uwsgi_params
 %config(noreplace) %{nginx_confdir}/uwsgi_params.default
 %config(noreplace) %{nginx_confdir}/win-utf
+%config(noreplace) %{nginx_confdir}/default.d/pagespeed.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/nginx
 %dir %{perl_vendorarch}/auto/nginx
 %{perl_vendorarch}/nginx.pm
