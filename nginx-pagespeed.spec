@@ -53,6 +53,7 @@ Source14:          nginx-upgrade.8
 Source15:          nginx.init
 Source16:          nginx.sysconfig
 Source17:          pagespeed.conf
+Source18:          ngx_pagespeed.pp
 Source100:         index.html
 Source101:         poweredby.png
 Source102:         nginx-logo.png
@@ -256,6 +257,7 @@ if [ $1 -eq 2 ]; then
     chmod 700 %{nginx_home_tmp}
     chmod 700 %{nginx_logdir}
 fi
+semodule -i %{Source18}
 
 %preun
 %if 0%{?with_systemd}
@@ -266,6 +268,7 @@ if [ $1 -eq 0 ]; then
     /sbin/chkconfig --del nginx
 fi
 %endif
+semodule -r ngx_pagespeed
 
 %postun
 %if 0%{?with_systemd}
