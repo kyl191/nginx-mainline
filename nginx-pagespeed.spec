@@ -312,7 +312,7 @@ fi
 %attr(700,%{nginx_user},%{nginx_group}) %dir %{nginx_home}
 %attr(700,%{nginx_user},%{nginx_group}) %dir %{nginx_home_tmp}
 %attr(700,%{nginx_user},%{nginx_group}) %dir %{nginx_logdir}
-%dir %{pagespeed_cachedir}
+%attr(755,%{nginx_user},%{nginx_group}) %dir %{pagespeed_cachedir}
 
 %files filesystem
 %dir %{nginx_datadir}
