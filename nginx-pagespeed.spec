@@ -244,7 +244,7 @@ exit 0
 %systemd_post nginx.service
 %else
 if [ $1 -eq 1 ]; then
-    /sbin/chkconfig --add %{name}
+    /sbin/chkconfig --add nginx
 fi
 %endif
 if [ $1 -eq 2 ]; then
@@ -259,8 +259,8 @@ fi
 %systemd_preun nginx.service
 %else
 if [ $1 -eq 0 ]; then
-    /sbin/service %{name} stop >/dev/null 2>&1
-    /sbin/chkconfig --del %{name}
+    /sbin/service nginx stop >/dev/null 2>&1
+    /sbin/chkconfig --del nginx
 fi
 %endif
 
@@ -269,7 +269,7 @@ fi
 %systemd_postun nginx.service
 %else
 if [ $1 -eq 2 ]; then
-    /sbin/service %{name} upgrade || :
+    /sbin/service nginx upgrade || :
 fi
 %endif
 
