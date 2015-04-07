@@ -26,8 +26,8 @@
 
 Name:              nginx-mainline
 Epoch:             1
-Version:           1.7.11
-Release:           3%{?dist}
+Version:           1.7.12
+Release:           1%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -309,6 +309,9 @@ fi
 
 
 %changelog
+* Wed Apr 08 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.7.12-1
+- Update to upstream 1.7.12
+
 * Sun Mar 29 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.7.11-3
 - Fix some spec issues
 - Change conf files to work on CentOS 6
