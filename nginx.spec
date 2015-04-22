@@ -263,6 +263,7 @@ fi
 %changelog
 * Wed Apr 22 2015 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.8.0-2
 - add --with-pcre-jit
+- improve nginx-upgrade script
 
 * Wed Apr 22 2015 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.8.0-1
 - update to upstream release 1.8.0
