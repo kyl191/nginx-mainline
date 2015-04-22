@@ -21,7 +21,7 @@
 Name:              nginx
 Epoch:             1
 Version:           1.8.0
-Release:           2%{?dist}
+Release:           3%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -261,9 +261,11 @@ fi
 
 
 %changelog
+* Wed Apr 22 2015 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.8.0-3
+- improve nginx-upgrade script
+
 * Wed Apr 22 2015 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.8.0-2
 - add --with-pcre-jit
-- improve nginx-upgrade script
 
 * Wed Apr 22 2015 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.8.0-1
 - update to upstream release 1.8.0
