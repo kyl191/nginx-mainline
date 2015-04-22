@@ -21,7 +21,7 @@
 Name:              nginx
 Epoch:             1
 Version:           1.8.0
-Release:           1%{?dist}
+Release:           2%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -143,6 +143,7 @@ export DESTDIR=%{buildroot}
     --with-mail \
     --with-mail_ssl_module \
     --with-pcre \
+    --with-pcre-jit \
 %if 0%{?with_gperftools}
     --with-google_perftools_module \
 %endif
@@ -260,6 +261,9 @@ fi
 
 
 %changelog
+* Wed Apr 22 2015 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.8.0-2
+- add --with-pcre-jit
+
 * Wed Apr 22 2015 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.8.0-1
 - update to upstream release 1.8.0
 
