@@ -20,7 +20,7 @@
 
 Name:              nginx
 Epoch:             1
-Version:           1.7.12
+Version:           1.8.0
 Release:           1%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
@@ -260,6 +260,9 @@ fi
 
 
 %changelog
+* Wed Apr 22 2015 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.8.0-1
+- update to upstream release 1.8.0
+
 * Thu Apr 09 2015 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.7.12-1
 - update to upstream release 1.7.12
 
