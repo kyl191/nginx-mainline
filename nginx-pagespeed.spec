@@ -10,7 +10,7 @@
 %global  pagespeed_cachedir  %{_localstatedir}/cache/ngx_pagespeed
 
 
-%define ngx_version 1.8.0
+%define ngx_version 1.7.12
 %define nps_version 1.9.32.3
 
 # gperftools exist only on selected arches
@@ -330,9 +330,6 @@ fi
 
 
 %changelog
-* Tue Apr 28 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.8.0-1
-- Update to upstream 1.8.0
-
 * Wed Apr 08 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.7.12-1
 - Update to upstream 1.7.12
 
