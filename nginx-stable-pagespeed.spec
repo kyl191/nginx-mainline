@@ -29,7 +29,7 @@
 %global with_systemd 0
 %endif
 
-Name:              nginx-pagespeed
+Name:              nginx-stable-pagespeed
 Epoch:             1
 Version:           %{ngx_version}
 Release:           1%{?dist}
@@ -71,13 +71,13 @@ BuildRequires:     perl-devel
 BuildRequires:     perl(ExtUtils::Embed)
 BuildRequires:     zlib-devel
 
-Requires:          nginx-pagespeed-filesystem = %{epoch}:%{version}-%{release}
+Requires:          nginx-stable-pagespeed-filesystem = %{epoch}:%{version}-%{release}
 Requires:          GeoIP
 Requires:          gd
 Requires:          openssl
 Requires:          pcre
 Requires:          perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
-Requires(pre):     nginx-pagespeed-filesystem
+Requires(pre):     nginx-stable-pagespeed-filesystem
 Provides:          webserver
 Obsoletes:         nginx < 1:1.7.0
 Conflicts:         nginx >= 1:1.7.0
@@ -114,11 +114,11 @@ directories. This installs the mainline version of nginx.
 
 
 %prep
-%setup -n nginx-pagespeed -c -q
+%setup -n nginx-stable-pagespeed -c -q
 mv nginx-%{ngx_version}/* .
 rmdir nginx-%{ngx_version}
-%setup -n nginx-pagespeed -T -D -a 2 -q
-%setup -n nginx-pagespeed -T -D -a 3 -q
+%setup -n nginx-stable-pagespeed -T -D -a 2 -q
+%setup -n nginx-stable-pagespeed -T -D -a 3 -q
 mv psol ngx_pagespeed-release-%{nps_version}-beta/
 
 
@@ -224,7 +224,7 @@ install -p -m 0644 %{SOURCE101} %{SOURCE102} \
 install -p -m 0644 %{SOURCE103} %{SOURCE104} \
     %{buildroot}%{nginx_webroot}
 
-install -p -D -m 0644 %{_builddir}/nginx-pagespeed/man/nginx.8 \
+install -p -D -m 0644 %{_builddir}/nginx-stable-pagespeed/man/nginx.8 \
     %{buildroot}%{_mandir}/man8/nginx.8
 
 install -p -D -m 0755 %{SOURCE13} %{buildroot}%{_bindir}/nginx-upgrade
@@ -331,7 +331,7 @@ fi
 
 %changelog
 * Tue Apr 28 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.8.0-1
-- Update to upstream 1.8.0
+- Create new stable 1.8.0
 
 * Wed Apr 08 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.7.12-1
 - Update to upstream 1.7.12
