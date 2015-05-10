@@ -21,7 +21,7 @@
 Name:              nginx
 Epoch:             1
 Version:           1.8.0
-Release:           3%{?dist}
+Release:           4%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -258,6 +258,14 @@ fi
 
 
 %changelog
+* Sun May 10 2015 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.8.0-4
+- add TimeoutStopSec=5 and KillMode=mixed to nginx.service
+- set worker_processes to auto
+- add some common options to the http block in nginx.conf
+- run nginx-upgrade on package update
+- remove some redundant scriptlet commands
+- listen on ipv6 for default server (#1217081)
+
 * Wed Apr 22 2015 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.8.0-3
 - improve nginx-upgrade script
 
