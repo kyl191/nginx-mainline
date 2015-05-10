@@ -216,6 +216,9 @@ fi
 
 %postun
 %systemd_postun nginx.service
+if [ $1 -ge 1 ]; then
+    /usr/bin/nginx-upgrade >/dev/null 2>&1 || :
+fi
 
 %files
 %doc LICENSE CHANGES README
