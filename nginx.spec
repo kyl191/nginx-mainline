@@ -204,12 +204,6 @@ exit 0
 
 %post
 %systemd_post nginx.service
-if [ $1 -eq 2 ]; then
-    # Make sure these directories are not world readable.
-    chmod 700 %{nginx_home}
-    chmod 700 %{nginx_home_tmp}
-    chmod 700 %{nginx_logdir}
-fi
 
 %preun
 %systemd_preun nginx.service
