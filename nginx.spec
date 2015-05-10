@@ -37,8 +37,6 @@ Source11:          nginx.logrotate
 Source12:          nginx.conf
 Source13:          nginx-upgrade
 Source14:          nginx-upgrade.8
-Source15:          nginx.init
-Source16:          nginx.sysconfig
 Source100:         index.html
 Source101:         poweredby.png
 Source102:         nginx-logo.png
