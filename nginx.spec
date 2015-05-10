@@ -37,7 +37,6 @@ Source11:          nginx.logrotate
 Source12:          nginx.conf
 Source13:          nginx-upgrade
 Source14:          nginx-upgrade.8
-Source20:          default.conf
 Source100:         index.html
 Source101:         poweredby.png
 Source102:         nginx-logo.png
@@ -175,8 +174,6 @@ install -p -d -m 0755 %{buildroot}%{nginx_webroot}
 
 install -p -m 0644 %{SOURCE12} \
     %{buildroot}%{nginx_confdir}
-install -p -m 0644 %{SOURCE20} \
-    %{buildroot}%{nginx_confdir}/conf.d
 install -p -m 0644 %{SOURCE100} \
     %{buildroot}%{nginx_webroot}
 install -p -m 0644 %{SOURCE101} %{SOURCE102} \
@@ -242,7 +239,6 @@ fi
 %config(noreplace) %{nginx_confdir}/uwsgi_params
 %config(noreplace) %{nginx_confdir}/uwsgi_params.default
 %config(noreplace) %{nginx_confdir}/win-utf
-%config(noreplace) %{nginx_confdir}/conf.d/default.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/nginx
 %dir %{perl_vendorarch}/auto/nginx
 %{perl_vendorarch}/nginx.pm
