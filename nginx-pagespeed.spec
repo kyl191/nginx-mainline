@@ -32,7 +32,7 @@
 Name:              nginx-pagespeed
 Epoch:             1
 Version:           %{ngx_version}
-Release:           1%{?dist}
+Release:           2%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -332,6 +332,9 @@ fi
 
 
 %changelog
+* Sat May 30 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.1-2
+- New build with upstream changed config files
+
 * Sat May 30 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.1-1
 - Update to upstream 1.9.1
 - Building with ngx_stream_core_module enabled (stream support)
