@@ -166,6 +166,7 @@ export DESTDIR=%{buildroot}
     --with-google_perftools_module \
 %endif
     --with-debug \
+    --with-stream \
     --with-cc-opt="%{optflags} $(pcre-config --cflags)" \
     --with-ld-opt="$RPM_LD_FLAGS -Wl,-E" # so the perl module finds its symbols
 
