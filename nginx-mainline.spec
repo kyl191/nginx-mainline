@@ -71,8 +71,8 @@ Requires:          pcre
 Requires:          perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 Requires(pre):     nginx-mainline-filesystem
 Provides:          webserver
-Obsoletes:         nginx < 1:1.7.0
-Conflicts:         nginx >= 1:1.7.0
+Obsoletes:         nginx < 1:1.9.0
+Conflicts:         nginx >= 1:1.9.0
 Conflicts:         nginx-pagespeed
 
 %if 0%{?with_systemd}
@@ -97,7 +97,7 @@ Summary:           The basic directory layout for the Nginx server
 BuildArch:         noarch
 Requires(pre):     shadow-utils
 Provides:          nginx-filesystem
-Obsoletes:         nginx-filesystem < 1:1.7.0
+Obsoletes:         nginx-filesystem < 1:1.9.0
 
 %description filesystem
 The nginx-filesystem package contains the basic directory layout
