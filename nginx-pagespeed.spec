@@ -10,7 +10,7 @@
 %global  pagespeed_cachedir  %{_localstatedir}/cache/ngx_pagespeed
 
 
-%define ngx_version 1.9.0
+%define ngx_version 1.9.1
 %define nps_version 1.9.32.3
 
 # gperftools exist only on selected arches
@@ -332,6 +332,10 @@ fi
 
 
 %changelog
+* Sat May 30 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.1-1
+- Update to upstream 1.9.1
+- Building with ngx_stream_core_module enabled (stream support)
+
 * Tue Apr 28 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.0-1
 - Create new stable 1.9.0
 
