@@ -32,7 +32,7 @@
 Name:              nginx-stable-pagespeed
 Epoch:             1
 Version:           %{ngx_version}
-Release:           1%{?dist}
+Release:           2%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -331,6 +331,9 @@ fi
 
 
 %changelog
+* Sat May 30 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.8.0-2
+- Pull in upstream changed config files
+
 * Tue Apr 28 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.8.0-1
 - Create new stable 1.8.0
 
