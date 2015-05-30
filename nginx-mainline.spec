@@ -74,6 +74,7 @@ Provides:          webserver
 Obsoletes:         nginx < 1:1.9.0
 Conflicts:         nginx >= 1:1.9.0
 Conflicts:         nginx-pagespeed
+Conflicts:         nginx-stable-pagespeed
 
 %if 0%{?with_systemd}
 BuildRequires:     systemd
