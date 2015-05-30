@@ -255,6 +255,9 @@ fi
 %postun
 %if 0%{?with_systemd}
 %systemd_postun nginx.service
+if [ $1 -ge 1 ]; then
+    /usr/bin/nginx-upgrade >/dev/null 2>&1 || :
+fi
 %else
 if [ $1 -eq 2 ]; then
     /sbin/service nginx upgrade || :
