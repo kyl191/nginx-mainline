@@ -79,8 +79,8 @@ Requires:          pcre
 Requires:          perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 Requires(pre):     nginx-stable-pagespeed-filesystem
 Provides:          webserver
-Obsoletes:         nginx < 1:1.7.0
-Conflicts:         nginx >= 1:1.7.0
+Obsoletes:         nginx < 1:1.8.0
+Conflicts:         nginx >= 1:1.8.0
 Conflicts:         nginx-mainline
 Conflicts:         nginx-pagespeed
 
