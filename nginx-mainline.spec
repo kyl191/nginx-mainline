@@ -162,6 +162,7 @@ export DESTDIR=%{buildroot}
     --with-mail \
     --with-mail_ssl_module \
     --with-pcre \
+    --with-pcre-jit \
 %if 0%{?with_gperftools}
     --with-google_perftools_module \
 %endif
