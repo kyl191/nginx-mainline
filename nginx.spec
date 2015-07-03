@@ -21,7 +21,7 @@
 Name:              nginx
 Epoch:             1
 Version:           1.8.0
-Release:           9%{?dist}
+Release:           10%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -256,6 +256,9 @@ fi
 
 
 %changelog
+* Fri Jul 03 2015 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.8.0-10
+- switch back to /bin/kill in logrotate script due to SELinux denials
+
 * Tue Jun 16 2015 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.8.0-9
 - fix path to png in error pages (#1232277)
 - optimize png images with optipng
