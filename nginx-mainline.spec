@@ -26,8 +26,8 @@
 
 Name:              nginx-mainline
 Epoch:             1
-Version:           1.9.1
-Release:           2%{?dist}
+Version:           1.9.2
+Release:           1%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -315,6 +315,9 @@ fi
 
 
 %changelog
+* Tue Aug 11 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.2-1
+- Update to upstream 1.9.2
+
 * Sat May 30 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.1-2
 - New build with upstream changed config files
 
