@@ -256,6 +256,9 @@ fi
 
 
 %changelog
+* Wed Aug 12 2015 Nikos Mavrogiannopoulos <nmav@redhat.com> - 1:1.8.0-11
+- nginx.conf: added commented-out SSL configuration directives (#1179232)
+
 * Fri Jul 03 2015 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.8.0-10
 - switch back to /bin/kill in logrotate script due to SELinux denials
 
