@@ -11,7 +11,7 @@
 
 
 %define ngx_version 1.8.0
-%define nps_version 1.9.32.3
+%define nps_version 1.9.32.4
 
 # gperftools exist only on selected arches
 %ifarch %{ix86} x86_64 ppc ppc64 %{arm}
@@ -32,7 +32,7 @@
 Name:              nginx-stable-pagespeed
 Epoch:             1
 Version:           %{ngx_version}
-Release:           2%{?dist}
+Release:           3%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -331,6 +331,9 @@ fi
 
 
 %changelog
+* Tue Aug 11 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.8.0-3
+- Update to upstream ngx_pagespeed 1.9.32.4
+
 * Sat May 30 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.8.0-2
 - Pull in upstream changed config files
 
