@@ -19,9 +19,9 @@
 %endif
 
 Name:              nginx
-Epoch:             2
+Epoch:             1
 Version:           1.8.0
-Release:           10%{?dist}
+Release:           11%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
