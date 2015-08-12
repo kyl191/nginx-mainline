@@ -19,7 +19,7 @@
 %endif
 
 Name:              nginx
-Epoch:             1
+Epoch:             2
 Version:           1.8.0
 Release:           10%{?dist}
 
