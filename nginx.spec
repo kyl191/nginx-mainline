@@ -9,7 +9,7 @@
 %global  nginx_webroot       %{nginx_datadir}/html
 
 # gperftools exist only on selected arches
-%ifarch %{ix86} x86_64 ppc ppc64 %{arm}
+%ifarch %{ix86} x86_64 ppc ppc64 %{arm} aarch64
 %global  with_gperftools     1
 %endif
 
@@ -21,7 +21,7 @@
 Name:              nginx
 Epoch:             1
 Version:           1.8.0
-Release:           11%{?dist}
+Release:           12%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -256,6 +256,9 @@ fi
 
 
 %changelog
+* Thu Sep 10 2015 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.8.0-12
+- also build with gperftools on aarch64 (#1258412)
+
 * Wed Aug 12 2015 Nikos Mavrogiannopoulos <nmav@redhat.com> - 1:1.8.0-11
 - nginx.conf: added commented-out SSL configuration directives (#1179232)
 
