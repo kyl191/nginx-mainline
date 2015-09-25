@@ -27,7 +27,7 @@
 Name:              nginx
 Epoch:             1
 Version:           1.8.0
-Release:           12%{?dist}
+Release:           13%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -272,7 +272,7 @@ fi
 
 
 %changelog
-* Fri Sep 25 2015 Ville Skyttä <ville.skytta@iki.fi>
+* Fri Sep 25 2015 Ville Skyttä <ville.skytta@iki.fi> - 1:1.8.0-13
 - Use nginx-mimetypes from mailcap (#1248736)
 - Mark LICENSE as %%license
 
