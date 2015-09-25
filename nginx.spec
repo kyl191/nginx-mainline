@@ -226,7 +226,8 @@ if [ $1 -ge 1 ]; then
 fi
 
 %files
-%doc LICENSE CHANGES README
+%license LICENSE
+%doc CHANGES README
 %{nginx_datadir}/html/*
 %{_bindir}/nginx-upgrade
 %{_sbindir}/nginx
@@ -273,6 +274,8 @@ fi
 %changelog
 * Fri Sep 25 2015 Ville Skyttä <ville.skytta@iki.fi>
 - Use nginx-mimetypes from mailcap (#1248736)
+- Mark LICENSE as %%license
+
 * Thu Sep 10 2015 Jamie Nguyen <jamielinux@fedoraproject.org> - 1:1.8.0-12
 - also build with gperftools on aarch64 (#1258412)
 
