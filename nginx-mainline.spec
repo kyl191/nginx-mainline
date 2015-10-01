@@ -142,7 +142,7 @@ export DESTDIR=%{buildroot}
 %endif
     --with-ipv6 \
     --with-http_ssl_module \
-    --with-http_spdy_module \
+    --with-http_v2_module \
     --with-http_realip_module \
     --with-http_addition_module \
     --with-http_xslt_module \
@@ -317,6 +317,7 @@ fi
 %changelog
 * Thu Oct 01 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.5-1
 - Update to upstream 1.9.5
+- replace http_spdy_module with http_v2_module
 
 * Thu Oct 01 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.4-1
 - Update to upstream 1.9.4
