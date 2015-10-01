@@ -9,7 +9,7 @@
 %global  nginx_webroot       %{nginx_datadir}/html
 
 # gperftools exist only on selected arches
-%ifarch %{ix86} x86_64 ppc ppc64 %{arm}
+%ifarch %{ix86} x86_64 ppc ppc64 %{arm} aarch64
 %global  with_gperftools     1
 %endif
 
@@ -24,10 +24,16 @@
 %global with_systemd 0
 %endif
 
+%if 0%{?fedora} > 22
+%bcond_without mailcap_mimetypes
+%else
+%bcond_with    mailcap_mimetypes
+%endif
+
 Name:              nginx-mainline
 Epoch:             1
-Version:           1.9.3
-Release:           1%{?dist}
+Version:           1.9.5
+Release:           2%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -43,8 +49,6 @@ Source11:          nginx.logrotate
 Source12:          nginx.conf
 Source13:          nginx-upgrade
 Source14:          nginx-upgrade.8
-Source15:          nginx.init
-Source16:          nginx.sysconfig
 Source100:         index.html
 Source101:         poweredby.png
 Source102:         nginx-logo.png
@@ -70,6 +74,10 @@ Requires:          openssl
 Requires:          pcre
 Requires:          perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 Requires(pre):     nginx-mainline-filesystem
+%if %{with mailcap_mimetypes}
+Requires:          nginx-mainline-mimetypes
+%endif
+
 Provides:          webserver
 Obsoletes:         nginx < 1:1.9.0
 Conflicts:         nginx >= 1:1.9.0
@@ -142,7 +150,7 @@ export DESTDIR=%{buildroot}
 %endif
     --with-ipv6 \
     --with-http_ssl_module \
-    --with-http_spdy_module \
+    --with-http_v2_module \
     --with-http_realip_module \
     --with-http_addition_module \
     --with-http_xslt_module \
@@ -210,6 +218,10 @@ install -p -m 0644 %{SOURCE101} %{SOURCE102} \
 install -p -m 0644 %{SOURCE103} %{SOURCE104} \
     %{buildroot}%{nginx_webroot}
 
+%if %{with mailcap_mimetypes}
+rm %{buildroot}%{_sysconfdir}/nginx/mime.types
+%endif
+
 install -p -D -m 0644 %{_builddir}/nginx-mainline/man/nginx.8 \
     %{buildroot}%{_mandir}/man8/nginx.8
 
@@ -267,7 +279,8 @@ fi
 %endif
 
 %files
-%doc LICENSE CHANGES README
+%license LICENSE
+%doc CHANGES README
 %{nginx_datadir}/html/*
 %{_bindir}/nginx-upgrade
 %{_sbindir}/nginx
@@ -289,7 +302,9 @@ fi
 %config(noreplace) %{nginx_confdir}/fastcgi_params.default
 %config(noreplace) %{nginx_confdir}/koi-utf
 %config(noreplace) %{nginx_confdir}/koi-win
+%if ! %{with mailcap_mimetypes}
 %config(noreplace) %{nginx_confdir}/mime.types
+%endif
 %config(noreplace) %{nginx_confdir}/mime.types.default
 %config(noreplace) %{nginx_confdir}/nginx.conf
 %config(noreplace) %{nginx_confdir}/nginx.conf.default
@@ -315,6 +330,16 @@ fi
 
 
 %changelog
+* Thu Oct 01 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.5-2
+- Merge in upstream changes
+
+* Thu Oct 01 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.5-1
+- Update to upstream 1.9.5
+- replace http_spdy_module with http_v2_module
+
+* Thu Oct 01 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.4-1
+- Update to upstream 1.9.4
+
 * Tue Aug 11 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.3-1
 - Update to upstream 1.9.3
 
