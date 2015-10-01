@@ -315,10 +315,10 @@ fi
 
 
 %changelog
-* Tue Oct 01 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.5-1
+* Thu Oct 01 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.5-1
 - Update to upstream 1.9.5
 
-* Tue Oct 01 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.4-1
+* Thu Oct 01 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.4-1
 - Update to upstream 1.9.4
 
 * Tue Aug 11 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.3-1
