@@ -32,8 +32,8 @@
 
 Name:              nginx-mainline
 Epoch:             1
-Version:           1.9.5
-Release:           2%{?dist}
+Version:           1.9.6
+Release:           1%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -330,6 +330,9 @@ fi
 
 
 %changelog
+* Thu Oct 29 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.6-1
+- Update to upstream nginx 1.9.6
+
 * Thu Oct 01 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.5-2
 - Merge in upstream changes
 
