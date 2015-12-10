@@ -33,7 +33,7 @@
 Name:              nginx-mainline
 Epoch:             1
 Version:           1.9.9
-Release:           1%{?dist}
+Release:           2%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -281,6 +281,7 @@ fi
 %endif
 
 %files
+%{!?_licensedir:%global license %doc}
 %license LICENSE
 %doc CHANGES README
 %{nginx_datadir}/html/*
@@ -332,6 +333,9 @@ fi
 
 
 %changelog
+* Thu Dec 10 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.9-2
+- Add EPEL6 files fix
+
 * Thu Dec 10 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.9-1
 - Update to upstream nginx 1.9.9
 
