@@ -32,8 +32,8 @@
 
 Name:              nginx-mainline
 Epoch:             1
-Version:           1.9.7
-Release:           2%{?dist}
+Version:           1.9.8
+Release:           1%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -49,6 +49,8 @@ Source11:          nginx.logrotate
 Source12:          nginx.conf
 Source13:          nginx-upgrade
 Source14:          nginx-upgrade.8
+Source15:          nginx.init
+Source16:          nginx.sysconfig
 Source100:         index.html
 Source101:         poweredby.png
 Source102:         nginx-logo.png
@@ -330,6 +332,10 @@ fi
 
 
 %changelog
+* Thu Dec 10 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.8-1
+- Update to upstream nginx 1.9.8
+- Fix EPEL6 build error
+
 * Thu Dec 10 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.7-2
 - Fix improperly merged systemd conf file (Thanks Sandro Mathys!)
 
