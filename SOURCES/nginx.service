@@ -8,11 +8,7 @@ PIDFile=/run/nginx.pid
 ExecStartPre=/usr/sbin/nginx -t
 ExecStart=/usr/sbin/nginx
 ExecReload=/bin/kill -s HUP $MAINPID
-<<<<<<< HEAD:SOURCES/nginx.service
-ExecStop=/bin/kill -s QUIT $MAINPID
-=======
 KillSignal=SIGQUIT
->>>>>>> upstream:nginx.service
 TimeoutStopSec=5
 KillMode=mixed
 PrivateTmp=true
