@@ -33,7 +33,7 @@
 Name:              nginx-mainline
 Epoch:             1
 Version:           1.9.9
-Release:           2%{?dist}
+Release:           3%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -77,7 +77,7 @@ Requires:          pcre
 Requires:          perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 Requires(pre):     nginx-mainline-filesystem
 %if %{with mailcap_mimetypes}
-Requires:          nginx-mainline-mimetypes
+Requires:          nginx-mimetypes
 %endif
 
 Provides:          webserver
@@ -333,6 +333,9 @@ fi
 
 
 %changelog
+* Sun Dec 13 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.9-3
+- remove reference to nginx-mainline-mimetypes, use the ones provided by fedora
+
 * Thu Dec 10 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.9-2
 - Add EPEL6 files fix
 
