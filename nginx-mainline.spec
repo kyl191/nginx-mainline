@@ -32,8 +32,8 @@
 
 Name:              nginx-mainline
 Epoch:             1
-Version:           1.9.9
-Release:           3%{?dist}
+Version:           1.9.10
+Release:           1%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -333,6 +333,9 @@ fi
 
 
 %changelog
+* Wed Jan 27 2016 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.10-1
+- Update to upstream nginx 1.9.10
+
 * Sun Dec 13 2015 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.9-3
 - remove reference to nginx-mainline-mimetypes, use the ones provided by fedora
 
