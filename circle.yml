@@ -1,20 +1,15 @@
 checkout:
   post:
-    - echo $(pwd)
-    - ls
-    - echo $(grep Version ${CIRCLE_PROJECT_REPONAME}.spec|sed 's/^Version:[ ]*//')
-    - NGINX_VERSION=$(grep Version ${CIRCLE_PROJECT_REPONAME}.spec|sed 's/^Version:[ ]*//') wget -nv -O SOURCES/nginx-$NGINX_VERSION.tar.gz http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz
-    - NGINX_VERSION=$(grep Version ${CIRCLE_PROJECT_REPONAME}.spec|sed 's/^Version:[ ]*//') wget -nv -O SOURCES/nginx-$NGINX_VERSION.tar.gz.asc http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz.asc
+    - export NGINX_VERSION=$(grep Version ${CIRCLE_PROJECT_REPONAME}.spec|sed 's/^Version:[ ]*//') && wget -nv -O SOURCES/nginx-${NGINX_VERSION}.tar.gz http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
+    - export NGINX_VERSION=$(grep Version ${CIRCLE_PROJECT_REPONAME}.spec|sed 's/^Version:[ ]*//') && wget -nv -O SOURCES/nginx-$NGINX_VERSION.tar.gz.asc http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz.asc
 
 dependencies:
   pre:
-    - sudo apt-get update; sudo apt-get install mock rpmbuild
-    - cd AttendeeProject/android && ./gradlew clean dependencies -PdisablePreDex
+    - sudo apt-get update; sudo apt-get install rpm
 
 test:
   override:
     - rpmbuild -bs --define "_topdir $(pwd)" ${CIRCLE_PROJECT_REPONAME}.spec
-    - /usr/bin/mock --rebuild SRPMS/${CIRCLE_PROJECT_REPONAME}*.src.rpm --uniqueext=${CIRCLE_PROJECT_REPONAME} --no-cleanup-after --no-clean --resultdir=.
   post:
     - mv *.src.rpm $CIRCLE_ARTIFACTS/
 
