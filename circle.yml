@@ -14,3 +14,6 @@ test:
     - /usr/bin/mock --rebuild SRPMS/${CIRCLE_PROJECT_REPONAME}*.src.rpm --uniqueext=${CIRCLE_PROJECT_REPONAME} --no-cleanup-after --no-clean --resultdir=.
   post:
     - mv *.src.rpm $CIRCLE_ARTIFACTS/
+
+general:
+  build_dir: ${CIRCLE_PROJECT_REPONAME}
