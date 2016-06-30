@@ -33,7 +33,7 @@
 Name:              nginx-mainline
 Epoch:             1
 Version:           1.9.15
-Release:           1%{?dist}
+Release:           2%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -333,6 +333,9 @@ fi
 
 
 %changelog
+* Thu Jun 30 2016 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.15-2
+- Migrate to CircleCI builds
+
 * Wed Apr 20 2016 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.15-1
 - Update to upstream nginx 1.9.15
 
