@@ -1,5 +1,8 @@
 checkout:
   post:
+    - echo $(pwd)
+    - ls
+    - echo $(grep Version ${CIRCLE_PROJECT_REPONAME}.spec|sed 's/^Version:[ ]*//')
     - NGINX_VERSION=$(grep Version ${CIRCLE_PROJECT_REPONAME}.spec|sed 's/^Version:[ ]*//') wget -nv -O SOURCES/nginx-$NGINX_VERSION.tar.gz http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz
     - NGINX_VERSION=$(grep Version ${CIRCLE_PROJECT_REPONAME}.spec|sed 's/^Version:[ ]*//') wget -nv -O SOURCES/nginx-$NGINX_VERSION.tar.gz.asc http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz.asc
 
@@ -15,5 +18,3 @@ test:
   post:
     - mv *.src.rpm $CIRCLE_ARTIFACTS/
 
-general:
-  build_dir: ${CIRCLE_PROJECT_REPONAME}
