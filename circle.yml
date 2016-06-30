@@ -13,11 +13,6 @@ test:
     - rpmbuild -bs --define "_topdir $(pwd)" ${CIRCLE_PROJECT_REPONAME}.spec
   post:
     - mv SRPMS/*.src.rpm $CIRCLE_ARTIFACTS/
-
-deployment:
-  release:
-    branch: master
-    commands:
-      - echo "export srpm_filename=$(ls $CIRCLE_ARTIFACTS/*.src.rpm)" > srpm
-      - source srpm && echo "export srpm_version=$(python -c "import re; print(re.findall('([0-9]+.[0-9]+.[0-9]+-[0-9]+)', '${srpm_filename}')[0])")" >> srpm
-      - source srpm && ghr -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} --replace ${CIRCLE_PROJECT_REPONAME}-${srpm_version} ${srpm_filename}
+    - echo "export srpm_filename=$(ls $CIRCLE_ARTIFACTS/*.src.rpm)" > srpm
+    - source srpm && echo "export srpm_version=$(python -c "import re; print(re.findall('([0-9]+.[0-9]+.[0-9]+-[0-9]+)', '${srpm_filename}')[0])")" >> srpm
+    - source srpm && ghr -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} --replace ${CIRCLE_PROJECT_REPONAME}-${srpm_version} ${srpm_filename}
