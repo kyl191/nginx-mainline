@@ -11,5 +11,5 @@ test:
   override:
     - rpmbuild -bs --define "_topdir $(pwd)" ${CIRCLE_PROJECT_REPONAME}.spec
   post:
-    - mv *.src.rpm $CIRCLE_ARTIFACTS/
+    - mv SRPMS/*.src.rpm $CIRCLE_ARTIFACTS/
 
