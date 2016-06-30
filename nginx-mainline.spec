@@ -334,7 +334,7 @@ fi
 
 %changelog
 * Thu Jun 30 2016 Kyle Lexmond <fedora@kyl191.net> - 1:1.11.0-1
-- Update to upstream nginx 1.11.o
+- Update to upstream nginx 1.11.0
 - Test CircleCI
 
 * Thu Jun 30 2016 Kyle Lexmond <fedora@kyl191.net> - 1:1.9.15-2
