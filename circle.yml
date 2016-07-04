@@ -16,4 +16,5 @@ test:
     - echo "export srpm_filename=$(ls $CIRCLE_ARTIFACTS/*.src.rpm)" > srpm
     - source srpm && echo "export srpm_version=$(python -c "import re; print(re.findall('([0-9]+.[0-9]+.[0-9]+-[0-9]+)', '${srpm_filename}')[0])")" >> srpm
     - source srpm && github-release release -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} --tag ${CIRCLE_PROJECT_REPONAME}-${srpm_version} --description "CircleCI ${CIRCLE_PROJECT_REPONAME} ${CIRCLE_BUILD_NUM} - ${CIRCLE_BUILD_URL}"
-    - source srpm && github-release upload -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} --tag ${CIRCLE_PROJECT_REPONAME}-${srpm_version} --file ${srpm_filename} --name ${srpm_filename}
+    - source srpm && github-release upload -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} --tag ${CIRCLE_PROJECT_REPONAME}-${srpm_version} --file ${srpm_filename} --name $(basename ${srpm_filename})
+    - source srpm && python3 copr_build.py ${srpm_filename}
