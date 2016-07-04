@@ -1,0 +1,24 @@
+machine:
+  python:
+    version: 3.5.1
+checkout:
+  post:
+    - export NGINX_VERSION=$(grep Version ${CIRCLE_PROJECT_REPONAME}.spec|sed 's/^Version:[ ]*//') && wget -nv -O SOURCES/nginx-${NGINX_VERSION}.tar.gz http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
+    - export NGINX_VERSION=$(grep Version ${CIRCLE_PROJECT_REPONAME}.spec|sed 's/^Version:[ ]*//') && wget -nv -O SOURCES/nginx-$NGINX_VERSION.tar.gz.asc http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz.asc
+
+dependencies:
+  pre:
+    - sudo apt-get update; sudo apt-get install rpm
+    - go get github.com/aktau/github-release
+    - pip3 install requests
+
+test:
+  override:
+    - rpmbuild -bs --define "_topdir $(pwd)" ${CIRCLE_PROJECT_REPONAME}.spec
+  post:
+    - mv SRPMS/*.src.rpm $CIRCLE_ARTIFACTS/
+    - echo "export srpm_filename=$(ls $CIRCLE_ARTIFACTS/*.src.rpm)" > srpm
+    - source srpm && echo "export srpm_version=$(python -c "import re; print(re.findall('([0-9]+.[0-9]+.[0-9]+-[0-9]+)', '${srpm_filename}')[0])")" >> srpm
+    - source srpm && github-release release -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} --tag ${CIRCLE_PROJECT_REPONAME}-${srpm_version} --description "CircleCI ${CIRCLE_PROJECT_REPONAME} ${CIRCLE_BUILD_NUM} - ${CIRCLE_BUILD_URL}"
+    - source srpm && github-release upload -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} --tag ${CIRCLE_PROJECT_REPONAME}-${srpm_version} --file ${srpm_filename} --name $(basename ${srpm_filename})
+    - source srpm && python3 copr_build.py ${srpm_filename}
