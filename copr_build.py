@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import json, os, sys
-from requests import post
+import requests
 api_url = "https://copr.fedorainfracloud.org/api_2"
 api_login = os.environ["copr_login"]
 api_token = os.environ["copr_token"]
@@ -18,4 +18,4 @@ files = {
     "srpm": (os.path.basename(sys.argv[1]), open(sys.argv[1], 'rb'), 'application/x-rpm'),
     "metadata": ('', json.dumps(metadata))
 }
-r = post("%s/builds" % api_url, auth=(api_login, api_token), files=files)
+r = requests.post("%s/builds" % api_url, auth=(api_login, api_token), files=files)

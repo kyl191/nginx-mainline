@@ -1,3 +1,6 @@
+machine:
+  python:
+    version: 3.5.1
 checkout:
   post:
     - export NGINX_VERSION=$(grep Version ${CIRCLE_PROJECT_REPONAME}.spec|sed 's/^Version:[ ]*//') && wget -nv -O SOURCES/nginx-${NGINX_VERSION}.tar.gz http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
@@ -7,6 +10,7 @@ dependencies:
   pre:
     - sudo apt-get update; sudo apt-get install rpm
     - go get github.com/aktau/github-release
+    - pip3 install requests
 
 test:
   override:
