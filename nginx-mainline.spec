@@ -33,7 +33,7 @@
 Name:              nginx-mainline
 Epoch:             1
 Version:           1.11.1
-Release:           4%{?dist}
+Release:           5%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -333,6 +333,9 @@ fi
 
 
 %changelog
+* Mon Jul 04 2016 Kyle Lexmond <fedora@kyl191.net> - 1:1.11.1-5
+- Rebuild on CircleCI to check everything is good
+
 * Mon Jul 04 2016 Kyle Lexmond <fedora@kyl191.net> - 1:1.11.1-4
 - Add a sleep to fix Github tagging
 
