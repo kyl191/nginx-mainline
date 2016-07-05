@@ -32,8 +32,8 @@
 
 Name:              nginx-mainline
 Epoch:             1
-Version:           1.11.1
-Release:           5%{?dist}
+Version:           1.11.2
+Release:           1%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -333,6 +333,9 @@ fi
 
 
 %changelog
+* Tue Jul 05 2016 Kyle Lexmond <fedora@kyl191.net> - 1:1.11.2-1
+- Update to upstream nginx 1.11.2
+
 * Mon Jul 04 2016 Kyle Lexmond <fedora@kyl191.net> - 1:1.11.1-5
 - Rebuild on CircleCI to check everything is good
 
