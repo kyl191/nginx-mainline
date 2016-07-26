@@ -33,7 +33,7 @@
 Name:              nginx-mainline
 Epoch:             1
 Version:           1.11.3
-Release:           1%{?dist}
+Release:           2%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -178,6 +178,7 @@ export DESTDIR=%{buildroot}
 %endif
     --with-debug \
     --with-stream \
+    --with-stream_ssl_module \
     --with-cc-opt="%{optflags} $(pcre-config --cflags)" \
     --with-ld-opt="$RPM_LD_FLAGS -Wl,-E" # so the perl module finds its symbols
 
@@ -333,6 +334,9 @@ fi
 
 
 %changelog
+* Tue Jul 26 2016 kyl191 <lantea@kyl191.net> - 1:1.11.3-2
+- Build stream_ssl_module as well
+
 * Tue Jul 26 2016 kyl191 <lantea@kyl191.net> - 1:1.11.3-1
 - Update to upstream nginx 1.11.3
 
