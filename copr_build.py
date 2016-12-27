@@ -18,7 +18,7 @@ for i in r.get("chroots"):
 
 metadata = {
     'chroots': chroots,
-    'project_id': project_id),
+    'project_id': project_id
 }
 files = {
     "srpm": (os.path.basename(sys.argv[1]), open(sys.argv[1], 'rb'), 'application/x-rpm'),
