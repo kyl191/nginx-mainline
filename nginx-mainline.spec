@@ -32,8 +32,8 @@
 
 Name:              nginx-mainline
 Epoch:             1
-Version:           1.11.3
-Release:           2%{?dist}
+Version:           1.11.4
+Release:           1%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
@@ -334,6 +334,9 @@ fi
 
 
 %changelog
+* Tue Dec 27 2016 Kyle Lexmond <fedora@kyl191.net> - 1:1.11.4-1
+- Update to upstream nginx 1.11.4
+
 * Tue Jul 26 2016 kyl191 <lantea@kyl191.net> - 1:1.11.3-2
 - Build stream_ssl_module as well
 
