@@ -22,7 +22,7 @@ metadata = {
 }
 files = {
     "srpm": (os.path.basename(sys.argv[1]), open(sys.argv[1], 'rb'), 'application/x-rpm'),
-    "metadata": ('', json.dumps(metadata))
+    "metadata": ('', json.dumps(metadata), 'application/json')
 }
 r = requests.post("%s/builds" % api_url, auth=(api_login, api_token), files=files)
 if r.status_code != 201:
