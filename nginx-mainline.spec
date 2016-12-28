@@ -32,7 +32,7 @@
 
 Name:              nginx-mainline
 Epoch:             1
-Version:           1.11.7
+Version:           1.11.8
 Release:           1%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
@@ -334,6 +334,9 @@ fi
 
 
 %changelog
+* Wed Dec 28 2016 Kyle Lexmond <fedora@kyl191.net> - 1:1.11.8-1
+- Update to upstream nginx 1.11.8
+
 * Tue Dec 27 2016 Kyle Lexmond <fedora@kyl191.net> - 1:1.11.7-1
 - Update to upstream nginx 1.11.7
 
