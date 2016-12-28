@@ -2,7 +2,7 @@
 import os
 import sys
 import requests
-api_url = "https://copr-fedorainfracloud-org-fc31565c3414.runscope.net/api_2"
+api_url = "https://copr.fedorainfracloud.org/api_2"
 api_login = os.environ["copr_login"]
 api_token = os.environ["copr_token"]
 project_id = int(os.environ["copr_projectid"])
@@ -24,7 +24,7 @@ if not gh.ok:
     print(gh.json())
     sys.exit(1)
 
-assets = r.json().get("assets")
+assets = gh.json().get("assets")
 if len(assets) > 1:
     print("More than 1 asset uploaded to Github, unexpected")
     sys.exit(1)
